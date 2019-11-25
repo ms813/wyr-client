@@ -1,6 +1,6 @@
 import React from 'react';
-import FirebaseService from './firebase/firebase.service';
 import * as firebase from 'firebase/app';
+import FirebaseService from '../firebase/firebase.service';
 import 'firebase/database';
 
 const firebaseConfig = {
@@ -18,6 +18,4 @@ firebase.initializeApp(firebaseConfig);
 
 const FirebaseContext = React.createContext(new FirebaseService());
 
-export const FirebaseProvider = FirebaseContext.Provider;
-export const FirebaseConsumer = FirebaseContext.Consumer;
 export default FirebaseContext;

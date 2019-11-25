@@ -18,5 +18,3 @@ const OptionsType = PropTypes.shape({
 });
 
 export {QuestionsType, OptionsType};
-
-

@@ -1,9 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Lobby from '../components/Lobby';
-import FirebaseContext from '../FirebaseContext';
+import FirebaseContext from '../config/FirebaseContext';
 
 const Player = ({gameId, playerName}) => {
-
     const [players, setPlayers] = useState({});
     const [questions, setQuestions] = useState({});
     const [hostState, setHostState] = useState('');

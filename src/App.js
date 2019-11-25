@@ -4,17 +4,24 @@ import Landing from './components/Landing';
 import Host from './host/Host';
 import Player from './player/Player';
 import Error from './components/Error';
-import FirebaseContext from './FirebaseContext';
+import FirebaseContext from './config/FirebaseContext';
+import SpeechContext from './config/SpeakTtsContext';
+import {randomBetween} from './config/Utils';
 
 function App() {
-
     const firebase = useContext(FirebaseContext);
+    const speech = useContext(SpeechContext);
 
     const [gameId, setGameId] = useState('');
     const [playerName, setPlayerName] = useState('');
 
     const [clientType, setClientType] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+
+    function isPlayerNameUnique(playerName, players) {
+        console.log(playerName, players);
+        return !Object.values(players).find((name) => name === playerName);
+    }
 
     const joinGame = () => {
         setErrorMessage('');
@@ -24,28 +31,22 @@ function App() {
             if (snapshotValue) {
                 if (!isPlayerNameUnique(playerName, snapshotValue.players || [])) {
                     console.warn(`Failed to join game ${gameId} as player ${playerName}, because a player already exists with that name`);
-                    return setErrorMessage(`That name is already taken, please choose another!`);
+                    return setErrorMessage('That name is already taken, please choose another!');
                 }
                 setClientType('player');
-                firebase.addPlayerToGame(gameId, playerName);
-                setGameId(gameId);
+                firebase.addPlayerToGame(gameId, playerName, speech.voices[randomBetween(0, speech.voices.length)]);
+                return setGameId(gameId);
             } else {
                 console.warn(`Failed to join game ${gameId}, because it does not exist`);
-                setErrorMessage(`Failed to join game ${gameId}, because it does not exist`);
+                return setErrorMessage(`Failed to join game ${gameId}, because it does not exist`);
             }
         });
     };
 
-
-    function isPlayerNameUnique(playerName, players) {
-        console.log(playerName, players);
-        return !Object.values(players).find(name => name === playerName);
-    }
-
     const createGame = () => {
         setErrorMessage('');
         console.log('Creating new game...');
-        firebase.createGame(gameId => {
+        firebase.createGame((gameId) => {
             console.log('New game successfully created: ', gameId);
             firebase.getGameRef(gameId).once('value').then((snapshot) => {
                 if (snapshot.val()) {
@@ -60,24 +61,31 @@ function App() {
         });
     };
 
-    const landing = <Landing
-        setGameId={setGameId}
-        setPlayerName={setPlayerName}
-        joinGame={joinGame}
-        createGame={createGame}
-    />;
+    const landing = (
+        <Landing
+            setGameId={setGameId}
+            setPlayerName={setPlayerName}
+            joinGame={joinGame}
+            createGame={createGame}
+        />
+    );
 
     const contentSwitch = () => {
         if (clientType === 'host') {
             return <Host gameId={gameId} />;
-        } else if (clientType === 'player') {
-            return <Player gameId={gameId} playerName={playerName} />;
-        } else {
-            return landing;
         }
+        if (clientType === 'player') {
+            return <Player gameId={gameId} playerName={playerName} />;
+        }
+        return landing;
     };
 
-    return <div>{contentSwitch()} {errorMessage && <Error errorMessage={errorMessage} />} </div>;
+    return (
+        <div>
+            {contentSwitch()}
+            {errorMessage && <Error errorMessage={errorMessage} />}
+        </div>
+    );
 }
 
 export default App;

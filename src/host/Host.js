@@ -1,11 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
-import Lobby from '../components/Lobby';
 import PropTypes from 'prop-types';
+import Lobby from '../components/Lobby';
 import HostState from './HostState';
-import FirebaseContext from '../FirebaseContext';
+import FirebaseContext from '../config/FirebaseContext';
 
 const Host = ({gameId}) => {
-
     const [players, setPlayers] = useState({});
     const [questions, setQuestions] = useState({});
     const [hostState, setHostState] = useState('');
@@ -27,16 +26,19 @@ const Host = ({gameId}) => {
 
     useEffect(() => {
         switch (hostState) {
-            case HostState.WAITING_FOR_ANSWERS:
+            case HostState.WAITING_FOR_QUESTIONS:
+                console.debug('Host state set to ', hostState);
                 const ref = firebase.getGameRef(gameId);
         }
     }, [hostState]);
 
     const contentSwitch = (hostState) => {
-        const lobby = <Lobby gameId={gameId} players={players} isHost={true} onClick={setHostState} />;
+        const lobby = <Lobby gameId={gameId} players={players} isHost onClick={setHostState} />;
         switch (hostState) {
             case HostState.HOST_LOBBY:
                 return lobby;
+            case HostState.WAITING_FOR_QUESTIONS:
+                return <div>lul</div>;
             default:
                 return lobby;
         }
