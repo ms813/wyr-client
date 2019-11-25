@@ -4,8 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import * as firebase from "firebase/app";
-
-ReactDOM.render(<App />, document.getElementById('root'));
+import 'firebase/database';
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
@@ -24,3 +23,5 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+ReactDOM.render(<App />, document.getElementById('root'));
