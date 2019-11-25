@@ -1,5 +1,5 @@
 import * as firebase from 'firebase/app';
-import {GameState, HostState} from '../GameState';
+import HostState from '../host/HostState';
 
 const hri = require('human-readable-ids').hri;
 

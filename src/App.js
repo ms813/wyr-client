@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import './App.css';
-import FirebaseService from './firebase/firebase.service';
 import Landing from './components/Landing';
 import Host from './host/Host';
 import Player from './player/Player';
 import Error from './components/Error';
+import FirebaseContext from './FirebaseContext';
 
 function App() {
 
-    const firebaseService = new FirebaseService();
+    const firebase = useContext(FirebaseContext);
 
     const [gameId, setGameId] = useState('');
     const [playerName, setPlayerName] = useState('');
@@ -19,7 +19,7 @@ function App() {
     const joinGame = () => {
         setErrorMessage('');
         console.log(`Attempting to join game ${gameId}`);
-        firebaseService.getGameRef(gameId).once('value').then((snapshot) => {
+        firebase.getGameRef(gameId).once('value').then((snapshot) => {
             const snapshotValue = snapshot.val();
             if (snapshotValue) {
                 if (!isPlayerNameUnique(playerName, snapshotValue.players || [])) {
@@ -27,7 +27,7 @@ function App() {
                     return setErrorMessage(`That name is already taken, please choose another!`);
                 }
                 setClientType('player');
-                firebaseService.addPlayerToGame(gameId, playerName);
+                firebase.addPlayerToGame(gameId, playerName);
                 setGameId(gameId);
             } else {
                 console.warn(`Failed to join game ${gameId}, because it does not exist`);
@@ -45,9 +45,9 @@ function App() {
     const createGame = () => {
         setErrorMessage('');
         console.log('Creating new game...');
-        firebaseService.createGame(gameId => {
+        firebase.createGame(gameId => {
             console.log('New game successfully created: ', gameId);
-            firebaseService.getGameRef(gameId).once('value').then((snapshot) => {
+            firebase.getGameRef(gameId).once('value').then((snapshot) => {
                 if (snapshot.val()) {
                     setGameId(gameId);
                     setClientType('host');

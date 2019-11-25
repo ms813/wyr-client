@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import HostState from '../host/HostState';
 
-const Lobby = ({gameId, players, isHost}) => {
-console.log(players);
+const Lobby = ({gameId, players, isHost, onClick}) => {
     return <div>
         <h1>You are in the lobby for {gameId}</h1>
         {players ?
@@ -13,7 +13,12 @@ console.log(players);
             </ul>
             : `Waiting on players to join`
         }
-        {isHost && <button type="button">Start</button>}
+        {
+            isHost &&
+            <button type="button" onClick={() => onClick(HostState.WAITING_FOR_QUESTIONS)}>
+                Start
+            </button>
+        }
     </div>;
 };
 

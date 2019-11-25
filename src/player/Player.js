@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Lobby from '../components/Lobby';
-import FirebaseService from '../firebase/firebase.service';
+import FirebaseContext from '../FirebaseContext';
 
 const Player = ({gameId, playerName}) => {
 
     const [players, setPlayers] = useState({});
     const [questions, setQuestions] = useState({});
     const [hostState, setHostState] = useState('');
+    const firebase = useContext(FirebaseContext);
 
     useEffect(() => {
-        const ref = new FirebaseService().getGameRef(gameId);
+        const ref = firebase.getGameRef(gameId);
 
         ref.on('value', (snapshot) => {
             const snapshotValue = snapshot.val();
