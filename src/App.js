@@ -34,7 +34,7 @@ function App() {
                     return setErrorMessage('That name is already taken, please choose another!');
                 }
                 setClientType('player');
-                firebase.addPlayerToGame(gameId, playerName, speech.voices[randomBetween(0, speech.voices.length)]);
+                firebase.addPlayerToGame(gameId, playerName);
                 return setGameId(gameId);
             } else {
                 console.warn(`Failed to join game ${gameId}, because it does not exist`);

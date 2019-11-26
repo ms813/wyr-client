@@ -18,8 +18,8 @@ class FirebaseService {
 
         const newGame = {
             players: [],
-            hostState: HostState.HOST_LOBBY,
-            questions: []
+            questions: [],
+            created: Date()
         };
 
         return this.database.ref(`/games/${gameId}`).set(newGame)
@@ -31,11 +31,10 @@ class FirebaseService {
         return this.database.ref(`/games/${gameId}`);
     }
 
-    addPlayerToGame(gameId, playerName, voice) {
-        console.log(`Adding player ${playerName} to game ${gameId} with voice ${voice}`);
+    addPlayerToGame(gameId, playerName) {
+        console.log(`Adding player ${playerName} to game ${gameId}`);
         return this.database.ref(`/games/${gameId}/players`).push({
             name: playerName,
-            voice: voice || DEFAULT_VOICE,
             state: PlayerState.LOBBY
         });
     }

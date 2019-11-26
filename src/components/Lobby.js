@@ -23,17 +23,14 @@ const Lobby = ({gameId, players, isHost = false, onClick}) => {
         .on('child_added', lastAddedPlayerSnapshot => {
             const {name, voice} = lastAddedPlayerSnapshot.val();
             console.log('last added player', name);
-            speech.setVoice(voice)
-            speak(`${name} has joined`)
+            speak(`${name === 'Phil' ? 'Big Philly Cheese Steak' : name} has joined`);
         });
         return ref.off;
     }, []);
 
     return (
         <div>
-            <h1>
-                You are in the lobby for {gameId}
-            </h1>
+            <h1>You are in the lobby for {gameId}</h1>
             {
                 players
                     ? (

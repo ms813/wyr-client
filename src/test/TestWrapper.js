@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
-import Lobby from '../components/Lobby';
 import FirebaseContext from '../config/FirebaseContext';
+import PlayerWriteQuestions from '../player/PlayerWriteQuestions';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {
     const [players, setPlayers] = useState({});
@@ -43,7 +43,17 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
     // };
 
     // return <HostWaitingForQuestions players={players} questions={questions}/>;
-    return <Lobby players={players} gameId={gameId} isHost />;
+    // return <Lobby players={players} gameId={gameId} isHost />;
+    const [a, setA] = useState('');
+    const [b, setB] = useState('');
+    return <PlayerWriteQuestions
+        gameId={gameId}
+        playerName={'Dooble'}
+        onClick={() => console.log(a, b)}
+        setA={setA}
+        setB={setB}
+    />;
+
 };
 
 export default TestWrapper;
