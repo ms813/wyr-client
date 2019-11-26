@@ -2,10 +2,10 @@ import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import Lobby from '../components/Lobby';
 import HostState from './HostState';
-import FirebaseContext from '../config/FirebaseContext';
+import FirebaseContext from '../firebase/FirebaseContext';
 import HostWaitingForQuestions from './HostWaitingForQuestions';
 import PlayerState from '../player/PlayerState';
-import SpeechContext from '../config/SpeakTtsContext';
+import SpeechContext from '../speech/SpeakTtsContext';
 
 const Host = ({gameId}) => {
     const [players, setPlayers] = useState({});

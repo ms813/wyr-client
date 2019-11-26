@@ -4,6 +4,6 @@ const randomBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-const DEFAULT_VOICE = 'Google UK English Male';
 
-export {randomBetween, DEFAULT_VOICE};
+
+export {randomBetween};

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import FirebaseContext from '../config/FirebaseContext';
+import FirebaseContext from '../firebase/FirebaseContext';
 import PlayerWriteQuestions from '../player/PlayerWriteQuestions';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {

@@ -30,11 +30,9 @@ class FirebaseService {
 
     addPlayerToGame(gameId, playerName) {
         console.log(`Adding player ${playerName} to game ${gameId}`);
-        return this.database.ref(`/games/${gameId}/players`).set({
-            [playerName]: {
-                name: playerName,
-                state: PlayerState.LOBBY
-            }
+        return this.database.ref(`/games/${gameId}/players/${playerName}`).set({
+            name: playerName,
+            state: PlayerState.LOBBY
         });
     }
 

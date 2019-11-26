@@ -1,15 +1,16 @@
 import React, {useContext, useEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import SpeechContext from '../config/SpeakTtsContext';
+import SpeechContext from '../speech/SpeakTtsContext';
 import HostState from './HostState';
 import PlayerState from '../player/PlayerState';
+import {SpeechEvent} from '../speech/SpeechService';
 
 const HostWaitingForQuestions = ({players, onClick}) => {
 
     const speech = useContext(SpeechContext);
 
     useEffect(() => {
-        speech.speak({text: "All right glebe shots, would you rather what or what? Put in your questions now"})
+        speech.speak(SpeechEvent.HOST_WAITING_FOR_QUESTIONS)
     }, [])
 
     const playerNames = Object.values(players).map(p => p.name);
@@ -24,7 +25,7 @@ const HostWaitingForQuestions = ({players, onClick}) => {
     console.log('all players written questions', allPlayersWrittenQuestions, playerStates.filter(p => p.state === PlayerState.WAITING_FOR_QUESTIONS), playerStates);
 
     if (allPlayersWrittenQuestions) {
-        speech.speak({text: 'All players have finished writing their questions. Lets move on...'});
+        speech.speak(SpeechEvent.ALL_PLAYERS_WRITTEN_QUESTIONS);
     }
 
     return (

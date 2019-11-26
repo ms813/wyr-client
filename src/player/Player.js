@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Lobby from '../components/Lobby';
-import FirebaseContext from '../config/FirebaseContext';
+import FirebaseContext from '../firebase/FirebaseContext';
 import PlayerState from './PlayerState';
 import PlayerWriteQuestions from './PlayerWriteQuestions';
 

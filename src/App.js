@@ -4,7 +4,7 @@ import Landing from './components/Landing';
 import Host from './host/Host';
 import Player from './player/Player';
 import Error from './components/Error';
-import FirebaseContext from './config/FirebaseContext';
+import FirebaseContext from './firebase/FirebaseContext';
 
 function App() {
     const firebase = useContext(FirebaseContext);
