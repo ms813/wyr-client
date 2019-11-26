@@ -1,8 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {Fragment, useContext, useEffect, useState} from 'react';
 import Lobby from '../components/Lobby';
 import FirebaseContext from '../firebase/FirebaseContext';
 import PlayerState from './PlayerState';
 import PlayerWriteQuestions from './PlayerWriteQuestions';
+import PlayerWriteAnswers from './PlayerWriteAnswers';
 
 const Player = ({gameId, playerName}) => {
     const [players, setPlayers] = useState({});
@@ -21,18 +22,21 @@ const Player = ({gameId, playerName}) => {
             setPlayerState(_players[playerName].state);
         });
         return ref.off;
-    }, []);
+    }, [firebase, gameId, playerName]);
 
-
-    useEffect(() => {
-        if (playerState) {
-            firebase.getPlayerRef(gameId, playerName).update({state: playerState});
-        }
-    }, [playerState]);
 
     useEffect(() => {
         firebase.getPlayerRef(gameId, playerName).update({optionA, optionB});
-    }, [optionA, optionB]);
+    }, [optionA, optionB, firebase, gameId, playerName]);
+
+    const updatePlayerState = (state) =>  {
+        firebase.getPlayerRef(gameId, playerName).update({state: state});
+        setPlayerState(state)
+    };
+
+    const tallyVote = (aOrB, askerName, voterName) =>
+        firebase.getPlayerRef(gameId, askerName).child(`/votes`).update({[voterName]: aOrB});
+
 
     const contentSwitch = () => {
 
@@ -45,11 +49,16 @@ const Player = ({gameId, playerName}) => {
                 return <PlayerWriteQuestions
                     setA={setA}
                     setB={setB}
-                    onClick={setPlayerState}
+                    onClick={updatePlayerState}
                     gameId={gameId}
                 />;
             case PlayerState.WAITING_FOR_QUESTIONS:
-                return <div>Waiting on everyone else to finish</div>;
+                return <Fragment>
+                    <div>Waiting on everyone else to finish</div>
+                    <div>You asked: Would you rather <b>{optionA}</b> or <b>{optionB}?</b></div>
+                </Fragment>;
+            case PlayerState.WRITING_ANSWERS:
+                return <PlayerWriteAnswers players={players} voterName={playerName} tallyVote={tallyVote} />;
             default:
                 return lobby;
         }

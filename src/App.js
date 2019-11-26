@@ -16,7 +16,6 @@ function App() {
     const [errorMessage, setErrorMessage] = useState('');
 
     function isPlayerNameUnique(playerName, players) {
-        console.log(playerName, players);
         return !Object.values(players).find((name) => name === playerName);
     }
 

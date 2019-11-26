@@ -5,7 +5,6 @@ import HostState from './HostState';
 import FirebaseContext from '../firebase/FirebaseContext';
 import HostWaitingForQuestions from './HostWaitingForQuestions';
 import PlayerState from '../player/PlayerState';
-import SpeechContext from '../speech/SpeakTtsContext';
 
 const Host = ({gameId}) => {
     const [players, setPlayers] = useState({});
@@ -24,28 +23,29 @@ const Host = ({gameId}) => {
         });
         return ref.off;
 
-    }, []);
+    }, [firebase, gameId]);
 
-    let firstTime = true;
     useEffect(() => {
+        const updateAllPlayersState = (state) => {
+            firebase.getPlayersRef(gameId).once('value', snapshot => {
+                snapshot.forEach(child => {
+                    child.ref.update({state});
+                });
+            });
+        };
+
         switch (hostState) {
             case HostState.WAITING_FOR_QUESTIONS:
-                console.debug('Host state set to ', hostState);
-                if(firstTime){
-                    firstTime = false;
-                    firebase.getPlayersRef(gameId).once('value', snapshot => {
-                        snapshot.forEach(child => {
-                            child.ref.update({
-                                state: PlayerState.WRITING_QUESTION
-                            });
-                        });
-                    });
-                }
+                updateAllPlayersState(PlayerState.WRITING_QUESTION);
+                break;
+            case HostState.WAITING_FOR_ANSWERS:
+                updateAllPlayersState(PlayerState.WRITING_ANSWERS);
                 break;
             default:
                 break;
         }
-    }, [hostState]);
+    }, [hostState, firebase, gameId]);
+
 
     const contentSwitch = (hostState) => {
         const lobby = <Lobby gameId={gameId} players={players} isHost onClick={setHostState} />;
@@ -63,6 +63,7 @@ const Host = ({gameId}) => {
 
     return (
         <div id="host-parent">
+            <h1>Room: {gameId}</h1>
             {contentSwitch(hostState)}
         </div>
     );

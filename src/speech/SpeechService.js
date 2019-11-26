@@ -59,9 +59,10 @@ const voiceLines = {
                     voice: 'Google 日本語'
                 },
                 {
-                    line: 'Let us all pause for a moment and take stock of the wonder that is... big Phil',
+                    line: 'Bonjour... big Phil',
                     voice: 'Google français'
-                }
+                },
+                {line: 'Let us all pause for a moment and take stock of the wonder that is big Phil'}
             ],
             claire: [
                 {line: 'Claire has joined, wub wub pipette that mouse angus'}

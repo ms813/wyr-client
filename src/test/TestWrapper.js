@@ -1,57 +1,39 @@
-import React, {useContext, useEffect, useState} from 'react';
-import FirebaseContext from '../firebase/FirebaseContext';
-import PlayerWriteQuestions from '../player/PlayerWriteQuestions';
+import React from 'react';
+import PlayerWriteAnswers from '../player/PlayerWriteAnswers';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {
-    const [players, setPlayers] = useState({});
-    const [questions, setQuestions] = useState({});
-    const [hostState, setHostState] = useState('');
-    const firebase = useContext(FirebaseContext);
 
-    useEffect(() => {
-        const ref = firebase.getGameRef(gameId);
-
-        ref.on('value', (snapshot) => {
-            const snapshotValue = snapshot.val();
-            if (snapshotValue) {
-                console.debug('Host snapshot update', snapshotValue);
-                setPlayers(snapshotValue.players);
-                setQuestions(snapshotValue.questions);
-                setHostState(snapshotValue.hostState);
-            }
-        });
-
-        return ref.off;
-    }, []);
-
-    // const players = {'123': 'Matt', '456': 'Flaps'};
-    // const questions = {
-    //     'qid123': {
-    //         options: {
-    //             a: "Eat 1000 apples",
-    //             b: "Chop a grey ham"
-    //         },
-    //         player: "Matt"
-    //     },
-    //     'qid456': {
-    //         options: {
-    //             a: "Tea",
-    //             b: "Coffee"
-    //         },
-    //         player: "Flaps"
-    //     },
-    // };
+    const players = {
+        Matt: {
+            name: 'Matt',
+            optionA: 'tea',
+            optionB: 'coffee'
+        },
+        Claire: {
+            name: 'Claire',
+            optionA: 'orange',
+            optionB: 'apple'
+        }
+    };
 
     // return <HostWaitingForQuestions players={players} questions={questions}/>;
     // return <Lobby players={players} gameId={gameId} isHost />;
-    const [a, setA] = useState('');
-    const [b, setB] = useState('');
-    return <PlayerWriteQuestions
-        gameId={gameId}
-        playerName={'Dooble'}
-        onClick={() => console.log(a, b)}
-        setA={setA}
-        setB={setB}
+
+    const tallyVote = (aOrB, askerName, voterName) => {
+        if(!players[askerName].votes){
+            players[askerName].votes = {}
+        }
+
+        players[askerName].votes[voterName] = aOrB;
+
+        console.log(players);
+    };
+
+
+    return <PlayerWriteAnswers
+        players={players}
+        voterName="Matt"
+        tallyVote={tallyVote}
     />;
 
 };

@@ -10,19 +10,18 @@ const HostWaitingForQuestions = ({players, onClick}) => {
     const speech = useContext(SpeechContext);
 
     useEffect(() => {
-        speech.speak(SpeechEvent.HOST_WAITING_FOR_QUESTIONS)
-    }, [])
+        speech.speak(SpeechEvent.HOST_WAITING_FOR_QUESTIONS);
+    }, [speech]);
 
     const playerNames = Object.values(players).map(p => p.name);
 
     const hasQuestion = (playerName) => {
-        const player = Object.values(players).find(p => p.name ===playerName);
+        const player = Object.values(players).find(p => p.name === playerName);
         return player.optionA && player.optionB;
     };
 
     const playerStates = Object.values(players).map(p => p.state);
     const allPlayersWrittenQuestions = playerStates.filter(state => state === PlayerState.WAITING_FOR_QUESTIONS).length === playerStates.length;
-    console.log('all players written questions', allPlayersWrittenQuestions, playerStates.filter(p => p.state === PlayerState.WAITING_FOR_QUESTIONS), playerStates);
 
     if (allPlayersWrittenQuestions) {
         speech.speak(SpeechEvent.ALL_PLAYERS_WRITTEN_QUESTIONS);

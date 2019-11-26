@@ -9,15 +9,16 @@ const Lobby = ({gameId, players, isHost = false, onClick}) => {
 
     const firebase = useContext(FirebaseContext);
     const speech = useContext(SpeechContext);
-    console.log(speech);
-    const speak = (speechEvent, args) => {
-        // one time check to see if speech has been initialized
-        if (isHost && speech) {
-            speech.speak(speechEvent, args);
-        }
-    };
 
     useEffect(() => {
+
+        const speak = (speechEvent, args) => {
+            // one time check to see if speech has been initialized
+            if (isHost && speech) {
+                speech.speak(speechEvent, args);
+            }
+        };
+
         speak(SpeechEvent.LOBBY_CREATED, {args: [gameId]});
 
         const ref = firebase.getPlayersRef(gameId)
@@ -26,8 +27,9 @@ const Lobby = ({gameId, players, isHost = false, onClick}) => {
             console.log('last added player', name);
             speak(SpeechEvent.PLAYER_JOINED, {args: [name]});
         });
+
         return ref.off;
-    }, []);
+    }, [firebase, gameId, isHost, speech]);
 
     return (
         <div>

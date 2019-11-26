@@ -1,6 +1,6 @@
 import React from 'react';
 import * as firebase from 'firebase/app';
-import FirebaseService from '../firebase/firebase.service';
+import FirebaseService from './FirebaseService';
 import 'firebase/database';
 
 const firebaseConfig = {
