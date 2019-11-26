@@ -12,8 +12,7 @@ class FirebaseService {
     }
 
     createGame(callback) {
-        const gameId = hri.random();
-
+        const gameId = hri.random().replace(/-/gi, ' ');
         const newGame = {
             players: [],
             questions: [],
@@ -31,14 +30,20 @@ class FirebaseService {
 
     addPlayerToGame(gameId, playerName) {
         console.log(`Adding player ${playerName} to game ${gameId}`);
-        return this.database.ref(`/games/${gameId}/players`).push({
-            name: playerName,
-            state: PlayerState.LOBBY
+        return this.database.ref(`/games/${gameId}/players`).set({
+            [playerName]: {
+                name: playerName,
+                state: PlayerState.LOBBY
+            }
         });
     }
 
     getPlayersRef(gameId) {
         return this.database.ref(`/games/${gameId}/players`);
+    }
+
+    getPlayerRef(gameId, playerName) {
+        return this.database.ref(`/games/${gameId}/players/${playerName}`);
     }
 }
 

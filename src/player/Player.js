@@ -18,7 +18,7 @@ const Player = ({gameId, playerName}) => {
         ref.on('value', (snapshot) => {
             const {players: _players} = snapshot.val();
             setPlayers(_players);
-            setPlayerState(Object.values(_players).find(p => p.name === playerName).state);
+            setPlayerState(_players[playerName].state);
         });
         return ref.off;
     }, []);
@@ -26,24 +26,12 @@ const Player = ({gameId, playerName}) => {
 
     useEffect(() => {
         if (playerState) {
-            update({state: playerState}, playerName);
+            firebase.getPlayerRef(gameId, playerName).update({state: playerState});
         }
     }, [playerState]);
 
-    const update = (_val, _playerName) => {
-        firebase.getPlayersRef(gameId).once('value', snapshot => {
-            snapshot.forEach(child => {
-                const {name} = child.val();
-                if (name === playerName) {
-                    console.log('updating player state', name, playerState);
-                    child.ref.update(_val);
-                }
-            });
-        });
-    };
-
     useEffect(() => {
-        update({optionA, optionB}, playerName);
+        firebase.getPlayerRef(gameId, playerName).update({optionA, optionB});
     }, [optionA, optionB]);
 
     const contentSwitch = () => {
