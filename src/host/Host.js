@@ -5,6 +5,7 @@ import HostState from './HostState';
 import FirebaseContext from '../config/FirebaseContext';
 import HostWaitingForQuestions from './HostWaitingForQuestions';
 import PlayerState from '../player/PlayerState';
+import SpeechContext from '../config/SpeakTtsContext';
 
 const Host = ({gameId}) => {
     const [players, setPlayers] = useState({});
@@ -16,26 +17,30 @@ const Host = ({gameId}) => {
         const ref = firebase.getGameRef(gameId);
 
         ref.on('value', (snapshot) => {
-            const snapshotValue = snapshot.val();
-            console.debug('Host snapshot update', snapshotValue);
-            setPlayers(snapshotValue.players);
-            setQuestions(snapshotValue.questions);
+            const {players: _players, questions: _questions} = snapshot.val();
+            console.log(snapshot.val());
+            setPlayers(_players);
+            setQuestions(_questions);
         });
         return ref.off;
 
     }, []);
 
+    let firstTime = true;
     useEffect(() => {
         switch (hostState) {
             case HostState.WAITING_FOR_QUESTIONS:
                 console.debug('Host state set to ', hostState);
-                firebase.getGameRef(`${gameId}/players`).ref.once('value', snapshot => {
-                    snapshot.forEach(child => {
-                        child.ref.update({
-                            state: PlayerState.WRITING_QUESTION
+                if(firstTime){
+                    firstTime = false;
+                    firebase.getPlayersRef(gameId).once('value', snapshot => {
+                        snapshot.forEach(child => {
+                            child.ref.update({
+                                state: PlayerState.WRITING_QUESTION
+                            });
                         });
                     });
-                });
+                }
                 break;
             default:
                 break;
@@ -44,7 +49,6 @@ const Host = ({gameId}) => {
 
     const contentSwitch = (hostState) => {
         const lobby = <Lobby gameId={gameId} players={players} isHost onClick={setHostState} />;
-        console.log('Host content switch', hostState);
         switch (hostState) {
             case HostState.HOST_LOBBY:
                 return lobby;

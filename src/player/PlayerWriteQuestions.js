@@ -1,14 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
+import PlayerState from './PlayerState';
 
-const PlayerWriteQuestions = ({playerName, onClick, setA, setB}) => {
+const PlayerWriteQuestions = ({onClick, setA, setB}) => {
     return (
         <div id="player-write-questions">
-            <h3>So, {playerName}. Would you rather...</h3>
+            <h3>Would you rather...</h3>
             <input id="inputA" type="text" onChange={e => setA(e.target.value)} />
             or
             <input id="inputB" type="text" onChange={e => setB(e.target.value)} />
             ?
-            <button type="button" onClick={onClick}>Submit</button>
+            <button type="button" onClick={()=>onClick(PlayerState.WAITING_FOR_QUESTIONS)}>Submit</button>
         </div>
     );
 };

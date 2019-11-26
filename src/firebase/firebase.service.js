@@ -1,7 +1,5 @@
 import * as firebase from 'firebase/app';
-import HostState from '../host/HostState';
 import PlayerState from '../player/PlayerState';
-import {DEFAULT_VOICE} from '../config/Utils';
 
 const hri = require('human-readable-ids').hri;
 

@@ -5,12 +5,9 @@ import Host from './host/Host';
 import Player from './player/Player';
 import Error from './components/Error';
 import FirebaseContext from './config/FirebaseContext';
-import SpeechContext from './config/SpeakTtsContext';
-import {randomBetween} from './config/Utils';
 
 function App() {
     const firebase = useContext(FirebaseContext);
-    const speech = useContext(SpeechContext);
 
     const [gameId, setGameId] = useState('');
     const [playerName, setPlayerName] = useState('');

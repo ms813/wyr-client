@@ -30,7 +30,7 @@ const Lobby = ({gameId, players, isHost = false, onClick}) => {
 
     return (
         <div>
-            <h1>You are in the lobby for {gameId}</h1>
+            <h1>{isHost ? "You are the host" :"You are in the lobby"} for {gameId}</h1>
             {
                 players
                     ? (

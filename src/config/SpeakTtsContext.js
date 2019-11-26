@@ -4,7 +4,7 @@ import {DEFAULT_VOICE} from './Utils';
 
 const speech = new Speech(); // will throw an exception if not browser supported
 speech.init({
-    volume: 1,
+    volume: 0.3,
     lang: 'en-GB',
     rate: 1,
     pitch: 1,
