@@ -1,10 +1,10 @@
 import React from 'react';
+import PlayerState from './PlayerState';
 
-const PlayerWriteAnswers = ({players, voterName, tallyVote}) => {
-
+const PlayerWriteAnswers = ({players, voterName, tallyVote, setVoterState}) => {
     return (
         <div>
-            <p>Would you rather...</p>
+            <p>{voterName}, would you rather...</p>
             {
                 Object.values(players).map(p => {
                     if (p.name === voterName) {
@@ -21,6 +21,7 @@ const PlayerWriteAnswers = ({players, voterName, tallyVote}) => {
                     </div>;
                 })
             }
+            <button type="button" onClick={() => setVoterState(PlayerState.WAITING_FOR_OTHER_PLAYERS)}>Finished</button>
         </div>
     );
 };

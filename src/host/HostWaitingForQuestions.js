@@ -21,7 +21,7 @@ const HostWaitingForQuestions = ({players, onClick}) => {
     };
 
     const playerStates = Object.values(players).map(p => p.state);
-    const allPlayersWrittenQuestions = playerStates.filter(state => state === PlayerState.WAITING_FOR_QUESTIONS).length === playerStates.length;
+    const allPlayersWrittenQuestions = playerStates.filter(state => state === PlayerState.WAITING_FOR_OTHER_PLAYERS).length === playerStates.length;
 
     if (allPlayersWrittenQuestions) {
         speech.speak(SpeechEvent.ALL_PLAYERS_WRITTEN_QUESTIONS);

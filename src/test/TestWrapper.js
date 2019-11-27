@@ -1,5 +1,5 @@
 import React from 'react';
-import PlayerWriteAnswers from '../player/PlayerWriteAnswers';
+import PlayerWaitingForOthers from '../player/PlayerWaitingForOthers';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {
 
@@ -7,12 +7,20 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
         Matt: {
             name: 'Matt',
             optionA: 'tea',
-            optionB: 'coffee'
+            optionB: 'coffee',
+            votes: {Claire: 'A', Phil: 'B'}
         },
         Claire: {
             name: 'Claire',
             optionA: 'orange',
-            optionB: 'apple'
+            optionB: 'apple',
+            votes: {Matt: 'B', Phil: 'A'}
+        },
+        Phil: {
+            name: 'Phil',
+            optionA: 'beard',
+            optionB: 'mustache',
+            votes: {Matt: 'A', Claire: 'A'}
         }
     };
 
@@ -20,21 +28,28 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
     // return <Lobby players={players} gameId={gameId} isHost />;
 
     const tallyVote = (aOrB, askerName, voterName) => {
-        if(!players[askerName].votes){
-            players[askerName].votes = {}
+        if (!players[askerName].votes) {
+            players[askerName].votes = {};
         }
 
         players[askerName].votes[voterName] = aOrB;
 
         console.log(players);
     };
-
-
-    return <PlayerWriteAnswers
+    const playerName = 'Claire';
+    return <PlayerWaitingForOthers
         players={players}
-        voterName="Matt"
-        tallyVote={tallyVote}
+        optionA={players[playerName].optionA}
+        optionB={players[playerName].optionB}
+        playerName={playerName}
     />;
+
+    // return <PlayerWriteAnswers
+    //     players={players}
+    //     voterName="Matt"
+    //     tallyVote={tallyVote}
+    //     onFinish={()=>console.log('finished')}
+    // />;
 
 };
 

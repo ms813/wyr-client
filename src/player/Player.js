@@ -1,9 +1,10 @@
-import React, {Fragment, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Lobby from '../components/Lobby';
 import FirebaseContext from '../firebase/FirebaseContext';
 import PlayerState from './PlayerState';
 import PlayerWriteQuestions from './PlayerWriteQuestions';
 import PlayerWriteAnswers from './PlayerWriteAnswers';
+import PlayerWaitingForOthers from './PlayerWaitingForOthers';
 
 const Player = ({gameId, playerName}) => {
     const [players, setPlayers] = useState({});
@@ -29,9 +30,9 @@ const Player = ({gameId, playerName}) => {
         firebase.getPlayerRef(gameId, playerName).update({optionA, optionB});
     }, [optionA, optionB, firebase, gameId, playerName]);
 
-    const updatePlayerState = (state) =>  {
+    const updatePlayerState = (state) => {
         firebase.getPlayerRef(gameId, playerName).update({state: state});
-        setPlayerState(state)
+        setPlayerState(state);
     };
 
     const tallyVote = (aOrB, askerName, voterName) =>
@@ -51,14 +52,13 @@ const Player = ({gameId, playerName}) => {
                     setB={setB}
                     onClick={updatePlayerState}
                     gameId={gameId}
+                    playerName={playerName}
                 />;
-            case PlayerState.WAITING_FOR_QUESTIONS:
-                return <Fragment>
-                    <div>Waiting on everyone else to finish</div>
-                    <div>You asked: Would you rather <b>{optionA}</b> or <b>{optionB}?</b></div>
-                </Fragment>;
+            case PlayerState.WAITING_FOR_OTHER_PLAYERS:
+                return <PlayerWaitingForOthers playerName={playerName} players={players}
+                                               optionA={optionA} optionB={optionB} />;
             case PlayerState.WRITING_ANSWERS:
-                return <PlayerWriteAnswers players={players} voterName={playerName} tallyVote={tallyVote} />;
+                return <PlayerWriteAnswers players={players} voterName={playerName} tallyVote={tallyVote} setVoterState={updatePlayerState} />;
             default:
                 return lobby;
         }
@@ -72,3 +72,5 @@ const Player = ({gameId, playerName}) => {
 };
 
 export default Player;
+;
+;
