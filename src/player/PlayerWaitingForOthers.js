@@ -1,8 +1,9 @@
 import React from 'react';
 
-const PlayerWaitingForOthers = ({optionA, optionB, players, playerName}) => {
+const PlayerWaitingForOthers = ({players, playerName}) => {
 
-    const createAnswer = ({votes, optionA, optionB}) => {
+    const {optionA, optionB} = players[playerName];
+    const createAnswer = ({votes, optionA, optionB, name}) => {
 
         let rather;
         let than;
@@ -13,7 +14,7 @@ const PlayerWaitingForOthers = ({optionA, optionB, players, playerName}) => {
             rather = optionB;
             than = optionA;
         }
-        return <div>{rather} than {than}</div>;
+        return <div key={name}>{rather} than {than}</div>;
     };
 
     return (
@@ -32,9 +33,7 @@ const PlayerWaitingForOthers = ({optionA, optionB, players, playerName}) => {
                 <div>
                     <h2>You would rather:</h2>
                     {Object.values(players).map(player => {
-                        if (player.name !== playerName) {
-                            return createAnswer(player);
-                        }
+                        return player.name !== playerName && createAnswer(player);
                     })}
                 </div>
             }

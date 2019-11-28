@@ -5,7 +5,7 @@ import HostState from './HostState';
 import PlayerState from '../player/PlayerState';
 import {SpeechEvent} from '../speech/SpeechService';
 
-const HostWaitingForQuestions = ({players, onClick}) => {
+const HostWaitingForQuestions = ({players, setHostState}) => {
 
     const speech = useContext(SpeechContext);
 
@@ -42,7 +42,7 @@ const HostWaitingForQuestions = ({players, onClick}) => {
             </ul>
             {
                 allPlayersWrittenQuestions &&
-                <button type="button" onClick={() => onClick(HostState.WAITING_FOR_ANSWERS)}>Next</button>
+                <button type="button" onClick={() => setHostState(HostState.WAITING_FOR_ANSWERS)}>Next</button>
             }
         </div>
     );

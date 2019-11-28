@@ -8,7 +8,7 @@ import PlayerWaitingForOthers from './PlayerWaitingForOthers';
 
 const Player = ({gameId, playerName}) => {
     const [players, setPlayers] = useState({});
-    const [playerState, setPlayerState] = useState('');
+    const [playerState, setPlayerState] = useState(PlayerState.LOBBY);
 
     const [optionA, setA] = useState('');
     const [optionB, setB] = useState('');
@@ -18,6 +18,9 @@ const Player = ({gameId, playerName}) => {
     useEffect(() => {
         const ref = firebase.getGameRef(gameId);
         ref.on('value', (snapshot) => {
+            if (!snapshot || !snapshot.val()) {
+                return ref.off();
+            }
             const {players: _players} = snapshot.val();
             setPlayers(_players);
             setPlayerState(_players[playerName].state);
@@ -51,14 +54,15 @@ const Player = ({gameId, playerName}) => {
                     setA={setA}
                     setB={setB}
                     onClick={updatePlayerState}
-                    gameId={gameId}
                     playerName={playerName}
                 />;
             case PlayerState.WAITING_FOR_OTHER_PLAYERS:
-                return <PlayerWaitingForOthers playerName={playerName} players={players}
-                                               optionA={optionA} optionB={optionB} />;
+                return <PlayerWaitingForOthers playerName={playerName} players={players} />;
             case PlayerState.WRITING_ANSWERS:
-                return <PlayerWriteAnswers players={players} voterName={playerName} tallyVote={tallyVote} setVoterState={updatePlayerState} />;
+                return <PlayerWriteAnswers players={players} voterName={playerName} tallyVote={tallyVote}
+                                           setVoterState={updatePlayerState} />;
+            case PlayerState.GAME_OVER:
+                return <div>The game has finished, thanks for playing!</div>;
             default:
                 return lobby;
         }
@@ -72,5 +76,3 @@ const Player = ({gameId, playerName}) => {
 };
 
 export default Player;
-;
-;

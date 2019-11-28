@@ -1,5 +1,7 @@
 import React from 'react';
-import PlayerWaitingForOthers from '../player/PlayerWaitingForOthers';
+import HostReveal from '../host/HostReveal';
+import SpeechContext from '../speech/SpeakTtsContext';
+import HostGameOver from '../host/HostGameOver';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {
 
@@ -37,12 +39,18 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
         console.log(players);
     };
     const playerName = 'Claire';
-    return <PlayerWaitingForOthers
-        players={players}
-        optionA={players[playerName].optionA}
-        optionB={players[playerName].optionB}
-        playerName={playerName}
-    />;
+
+    // return <HostReveal players={players} />
+
+    return <HostGameOver/>
+    // return <HostWaitingForAnswers players={players} />;
+
+    // return <PlayerWaitingForOthers
+    //     players={players}
+    //     optionA={players[playerName].optionA}
+    //     optionB={players[playerName].optionB}
+    //     playerName={playerName}
+    // />;
 
     // return <PlayerWriteAnswers
     //     players={players}

@@ -5,21 +5,23 @@ import HostState from './HostState';
 import FirebaseContext from '../firebase/FirebaseContext';
 import HostWaitingForQuestions from './HostWaitingForQuestions';
 import PlayerState from '../player/PlayerState';
+import HostWaitingForAnswers from './HostWaitingForAnswers';
+import HostReveal from './HostReveal';
+import HostGameOver from './HostGameOver';
 
 const Host = ({gameId}) => {
     const [players, setPlayers] = useState({});
-    const [questions, setQuestions] = useState({});
-    const [hostState, setHostState] = useState('');
+    const [hostState, setHostState] = useState(HostState.HOST_LOBBY);
     const firebase = useContext(FirebaseContext);
 
     useEffect(() => {
         const ref = firebase.getGameRef(gameId);
 
         ref.on('value', (snapshot) => {
-            const {players: _players, questions: _questions} = snapshot.val();
-            console.log(snapshot.val());
-            setPlayers(_players);
-            setQuestions(_questions);
+            if (!snapshot || !snapshot.val()) {
+                return ref.off();
+            }
+            return setPlayers(snapshot.val().players);
         });
         return ref.off;
 
@@ -41,6 +43,10 @@ const Host = ({gameId}) => {
             case HostState.WAITING_FOR_ANSWERS:
                 updateAllPlayersState(PlayerState.WRITING_ANSWERS);
                 break;
+            case HostState.GAME_OVER:
+                updateAllPlayersState(PlayerState.GAME_OVER);
+                firebase.getGameRef(gameId).remove();
+                break;
             default:
                 break;
         }
@@ -53,9 +59,13 @@ const Host = ({gameId}) => {
             case HostState.HOST_LOBBY:
                 return lobby;
             case HostState.WAITING_FOR_QUESTIONS:
-                return <HostWaitingForQuestions players={players} questions={questions} onClick={setHostState} />;
+                return <HostWaitingForQuestions players={players} setHostState={setHostState} />;
             case HostState.WAITING_FOR_ANSWERS:
-                return <div>Waiting for answers</div>;
+                return <HostWaitingForAnswers players={players} setHostState={setHostState} />;
+            case HostState.REVEAL_QUESTION:
+                return <HostReveal players={players} setHostState={setHostState} />;
+            case HostState.GAME_OVER:
+                return <HostGameOver />;
             default:
                 return lobby;
         }
