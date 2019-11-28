@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import HostState from './HostState';
 import SpeechContext from '../speech/SpeakTtsContext';
@@ -7,6 +7,7 @@ import {SpeechEvent} from '../speech/SpeechService';
 const HostWaitingForAnswers = ({players, setHostState}) => {
 
     const [firstTime, setFirstTime] = useState(true);
+    const [allAnsweredFirstTime, setAllAnsweredFirstTime] = useState(true);
     const speech = useContext(SpeechContext);
 
     const answerCounts = Object.values(players).map(player => {
@@ -19,11 +20,16 @@ const HostWaitingForAnswers = ({players, setHostState}) => {
         return {name: player.name, remaining: answerCount};
     });
 
+    if(firstTime){
+        speech.speak(SpeechEvent.REQUEST_ANSWERS);
+        setFirstTime(false);
+    }
+
     const allPlayersAnswered = answerCounts.filter(a => a.remaining !== 0).length === 0;
-    if (allPlayersAnswered && firstTime) {
+    if (allPlayersAnswered && allAnsweredFirstTime) {
         // triggered multiple times because of player state changes
         speech.speak(SpeechEvent.ALL_PLAYERS_ANSWERED);
-        setFirstTime(false);
+        setAllAnsweredFirstTime(false);
     }
 
     return (

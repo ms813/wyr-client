@@ -1,6 +1,4 @@
 import React from 'react';
-import HostReveal from '../host/HostReveal';
-import SpeechContext from '../speech/SpeakTtsContext';
 import HostGameOver from '../host/HostGameOver';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {
@@ -35,14 +33,12 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
         }
 
         players[askerName].votes[voterName] = aOrB;
-
-        console.log(players);
     };
     const playerName = 'Claire';
 
     // return <HostReveal players={players} />
 
-    return <HostGameOver/>
+    return <HostGameOver />;
     // return <HostWaitingForAnswers players={players} />;
 
     // return <PlayerWaitingForOthers

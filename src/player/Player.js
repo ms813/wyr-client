@@ -5,6 +5,7 @@ import PlayerState from './PlayerState';
 import PlayerWriteQuestions from './PlayerWriteQuestions';
 import PlayerWriteAnswers from './PlayerWriteAnswers';
 import PlayerWaitingForOthers from './PlayerWaitingForOthers';
+import PlayerGameOver from './PlayerGameOver';
 
 const Player = ({gameId, playerName}) => {
     const [players, setPlayers] = useState({});
@@ -53,7 +54,7 @@ const Player = ({gameId, playerName}) => {
                 return <PlayerWriteQuestions
                     setA={setA}
                     setB={setB}
-                    onClick={updatePlayerState}
+                    updatePlayerState={updatePlayerState}
                     playerName={playerName}
                 />;
             case PlayerState.WAITING_FOR_OTHER_PLAYERS:
@@ -62,7 +63,7 @@ const Player = ({gameId, playerName}) => {
                 return <PlayerWriteAnswers players={players} voterName={playerName} tallyVote={tallyVote}
                                            setVoterState={updatePlayerState} />;
             case PlayerState.GAME_OVER:
-                return <div>The game has finished, thanks for playing!</div>;
+                return <PlayerGameOver />;
             default:
                 return lobby;
         }
@@ -71,6 +72,8 @@ const Player = ({gameId, playerName}) => {
     return (
         <div id="player-parent">
             {contentSwitch()}
+            <br/>
+            <div>Room {gameId}</div>
         </div>
     );
 };

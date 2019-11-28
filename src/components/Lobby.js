@@ -24,7 +24,6 @@ const Lobby = ({gameId, players, isHost = false, onClick}) => {
         const ref = firebase.getPlayersRef(gameId)
         .on('child_added', lastAddedPlayerSnapshot => {
             const {name} = lastAddedPlayerSnapshot.val();
-            console.log('last added player', name);
             speak(SpeechEvent.PLAYER_JOINED, {args: [name]});
         });
 

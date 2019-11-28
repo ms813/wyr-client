@@ -8,15 +8,12 @@ const HostReveal = ({players, setHostState}) => {
     const commentProbability = 0.15;
     const speech = useContext(SpeechContext);
     const [index, setIndex] = useState(0);
-    const [firstTime, setFirstTime] = useState(true);
 
     const {name, optionA, optionB, votes} = Object.values(players)[index];
 
     useEffect(() => {
-        if (firstTime) {
+        if (index === 0) {
             speech.speak(SpeechEvent.REVEAL_FIRST_TIME, {args: players});
-
-            setFirstTime(false);
         }
         speech.speak(SpeechEvent.REVEAL_QUESTION, {args: {name, optionA, optionB, votes}});
         Object.entries(votes).forEach(([name, vote]) => {
@@ -26,7 +23,7 @@ const HostReveal = ({players, setHostState}) => {
                 speech.speak(SpeechEvent.REVEAL_ANSWER_COMMENT, {args});
             }
         });
-    }, [index, players]);
+    }, [index]);
 
     return (
         <div id="host-reveal">

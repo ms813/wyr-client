@@ -18,7 +18,6 @@ class SpeechService {
         // exit early if voice is not initialized
         if (!this.speech.synthesisVoice) return;
 
-        console.log(speechEvent, args);
         const t = voiceLines[speechEvent](args);
         if (t.voice) {
             this.speech.setVoice(t.voice);
@@ -40,7 +39,8 @@ const SpeechEvent = {
     REVEAL_FIRST_TIME: 'REVEAL_FIRST_TIME',
     REVEAL_ANSWER: 'REVEAL_ANSWER',
     REVEAL_ANSWER_COMMENT: 'REVEAL_ANSWER_COMMENT',
-    GAME_OVER: "GAME_OVER"
+    GAME_OVER: 'GAME_OVER',
+    REQUEST_ANSWERS: 'REQUEST_ANSWERS'
 };
 
 const voiceLines = {
@@ -95,6 +95,13 @@ const voiceLines = {
         return chooseLineOrOverride(lines);
     },
 
+    [SpeechEvent.REQUEST_ANSWERS]: () => {
+        const lines = [
+            {line: 'I mean, if you don\'t understand what to do by this point you are beyond any help I can provide. Answer the damn questions.'}
+        ];
+        return chooseLineOrOverride(lines);
+    },
+
     [SpeechEvent.ALL_PLAYERS_ANSWERED]: () => {
         const lines = [
             {line: 'Looks like everyone is finished, lets get this over with'}
@@ -143,7 +150,7 @@ const voiceLines = {
             {line: `zzz`},
             {line: `yawn`},
             {line: `What! Really?`},
-            {line: `I thought ${name} really hated ${answer}`},
+            {line: `I thought ${name} really hated ${answer}`}
         ];
 
         return chooseLineOrOverride(lines);
@@ -160,7 +167,6 @@ const voiceLines = {
 
 const chooseLineOrOverride = (lines, overrideArg, overrides) => {
     if (overrides && overrides[overrideArg]) {
-        console.log(0, overrides[overrideArg].length - 1, randomBetween(0, overrides[overrideArg].length - 1));
         return overrides[overrideArg][randomBetween(0, overrides[overrideArg].length - 1)];
     }
     return lines[randomBetween(0, lines.length - 1)];

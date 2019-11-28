@@ -14,7 +14,7 @@ const Landing = ({
                     type="text"
                     name="joinGame"
                     placeholder="Game ID"
-                    onChange={(e) => setGameId(e.target.value)}
+                    onChange={(e) => setGameId(e.target.value.toLowerCase())}
                 />
             </label>
             <label>
@@ -23,7 +23,7 @@ const Landing = ({
                     type="text"
                     name="playerName"
                     placeholder="Player name"
-                    onChange={(e) => setPlayerName(e.target.value)}
+                    onChange={(e) => setPlayerName(e.target.value.toLowerCase())}
                 />
             </label>
             <button type="button" onClick={joinGame}>Join</button>
