@@ -1,5 +1,5 @@
 import React from 'react';
-import HostGameOver from '../host/HostGameOver';
+import CreateOrJoinForm from '../components/CreateOrJoinForm';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {
 
@@ -38,7 +38,14 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
 
     // return <HostReveal players={players} />
 
-    return <HostGameOver />;
+    return <CreateOrJoinForm
+        setGameId={gameId => console.log('set game Id', gameId)}
+        setPlayerName={name => console.log('set player name', name)}
+        joinGame={() => console.log('join')}
+        createGame={() => console.log('create')}
+        playerNameError={"player name error"}
+        gameIdError={"game Id error"}
+    />;
     // return <HostWaitingForAnswers players={players} />;
 
     // return <PlayerWaitingForOthers

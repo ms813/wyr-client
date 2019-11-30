@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import 'typeface-roboto';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
@@ -17,15 +18,6 @@ serviceWorker.unregister();
 FontAwesomeConfig();
 
 ReactDOM.render(
-    <Router>
-        <Switch>
-            <Route path="/test">
-                <TestWrapper />
-            </Route>
-            <Route path="/">
-                <App />
-            </Route>
-        </Switch>
-    </Router>,
+    <App />,
     document.getElementById('root')
 );
