@@ -44,7 +44,7 @@ const SpeechEvent = {
 };
 
 const voiceLines = {
-    [SpeechEvent.LOBBY_CREATED]: ([gameId]) => {
+    [SpeechEvent.LOBBY_CREATED]: ({gameId, overrideProbability}) => {
         const lines = [
             {line: `Welcome to ${gameId}`}
         ];
@@ -54,7 +54,7 @@ const voiceLines = {
         return chooseLineOrOverride(lines);
     },
 
-    [SpeechEvent.PLAYER_JOINED]: ([playerName]) => {
+    [SpeechEvent.PLAYER_JOINED]: ({name: playerName, overrideProbability}) => {
         const lines = [
             {line: `${playerName} has joined`},
             {line: `Welcome, ${playerName}`}
@@ -109,14 +109,14 @@ const voiceLines = {
         return chooseLineOrOverride(lines);
     },
 
-    [SpeechEvent.REVEAL_FIRST_TIME]: ({players}) => {
+    [SpeechEvent.REVEAL_FIRST_TIME]: ({players, overrideProbability}) => {
         const lines = [
             {line: 'Finally, on to the big reveal'}
         ];
         return chooseLineOrOverride(lines);
     },
 
-    [SpeechEvent.REVEAL_QUESTION]: ({name, optionA, optionB, votes}) => {
+    [SpeechEvent.REVEAL_QUESTION]: ({name, optionA, optionB, votes, overrideProbability}) => {
 
         const lines = [
             {line: `${name} asked. Would you rather ${optionA} or ${optionB}`}
@@ -132,14 +132,20 @@ const voiceLines = {
         return chooseLineOrOverride(lines, name.toLowerCase(), overrides);
     },
 
-    [SpeechEvent.REVEAL_ANSWER]: ({name, answer}) => {
+    [SpeechEvent.REVEAL_ANSWER]: ({name, answer, overrideProbability}) => {
 
         const lines = [
             {line: `${name} would rather ${answer}`},
             {line: `${name} would rather ${answer}`}
         ];
 
-        return chooseLineOrOverride(lines);
+        const overrides =  {
+            phil: [
+                {line: `Flanders would rather Diddly`},
+            ]
+        };
+
+        return chooseLineOrOverride(lines, name.toLowerCase(), overrides, overrideProbability);
     },
 
     [SpeechEvent.REVEAL_ANSWER_COMMENT]: ({name, answer}) => {
@@ -165,8 +171,8 @@ const voiceLines = {
     }
 };
 
-const chooseLineOrOverride = (lines, overrideArg, overrides) => {
-    if (overrides && overrides[overrideArg]) {
+const chooseLineOrOverride = (lines, overrideArg, overrides, overrideProbability = 0.15) => {
+    if (Math.random() < overrideProbability && overrides && overrides[overrideArg]) {
         return overrides[overrideArg][randomBetween(0, overrides[overrideArg].length - 1)];
     }
     return lines[randomBetween(0, lines.length - 1)];

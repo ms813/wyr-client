@@ -17,7 +17,10 @@ const HostReveal = ({players, setHostState}) => {
         }
         speech.speak(SpeechEvent.REVEAL_QUESTION, {args: {name, optionA, optionB, votes}});
         Object.entries(votes).forEach(([name, vote]) => {
-            const args = {name, answer: vote === 'A' ? optionA : optionB};
+            const args = {
+                name: /*overrideName(name)*/name,
+                answer: /*overrideVote(name, vote)*/vote === 'A' ? optionA : optionB
+            };
             speech.speak(SpeechEvent.REVEAL_ANSWER, {args});
             if (Math.random() < commentProbability) {
                 speech.speak(SpeechEvent.REVEAL_ANSWER_COMMENT, {args});

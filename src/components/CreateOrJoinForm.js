@@ -33,7 +33,7 @@ const CreateOrJoinForm = ({setGameId, setPlayerName, joinGame, createGame, gameI
                 </Box>
                 <Box className={classes.inputField}>
                     <TextField id="player-name-input" label="Player Name" variant="outlined"
-                               onChange={(e) => setPlayerName(e.target.value.toLowerCase())}
+                               onChange={(e) => setPlayerName(e.target.value)}
                                error={!!playerNameError} helperText={playerNameError} fullWidth />
                 </Box>
                 <Box className={classes.inputField}>

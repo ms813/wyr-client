@@ -4,4 +4,6 @@ const randomBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export {randomBetween};
+const MIN_PLAYERS = 2;
+
+export {randomBetween, MIN_PLAYERS};

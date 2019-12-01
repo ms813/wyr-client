@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core';
 import TestWrapper from './test/TestWrapper';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import Box from '@material-ui/core/Box';
 
 function App() {
     const firebase = useContext(FirebaseContext);
@@ -22,7 +23,7 @@ function App() {
     const [playerNameError, setPlayerNameError] = useState('');
 
     function isPlayerNameUnique(playerName, players) {
-        return !Object.values(players).find((name) => name === playerName);
+        return !Object.keys(players).find((name) => name === playerName);
     }
 
     const clearErrors = () => {
@@ -33,8 +34,13 @@ function App() {
     const joinGame = () => {
         clearErrors();
 
-        if(!gameId){
-            setGameIdError("Please enter a room name");
+        if (!gameId) {
+            setGameIdError('Please enter a room name');
+            return;
+        }
+
+        if (!playerName) {
+            setPlayerNameError('Please enter a name');
             return;
         }
 
@@ -91,6 +97,23 @@ function App() {
         />;
     };
 
+    const appBar = (gameId, clientType) => {
+        let clientTypeFragment;
+        if (gameId && clientType) {
+            if (clientType === 'player') {
+                clientTypeFragment = <Typography variant="subtitle2">Player in <i>{gameId}</i></Typography>;
+            } else if (clientType === 'host') {
+                clientTypeFragment = <Typography variant="subtitle2">Host for <i>{gameId}</i></Typography>;
+            }
+        }
+        return (
+            <Box display="flex" flexDirection="column">
+                <Typography variant="h6" className={classes.title}> Would you rather?</Typography>
+                {clientTypeFragment}
+            </Box>
+        );
+    };
+
     const classes = useStyles();
 
     return (
@@ -99,9 +122,7 @@ function App() {
                 <AppBar position="static">
                     <Toolbar>
                         <img src="favicon.ico" alt="Logo" className={classes.icon} />
-                        <Typography variant="h6" className={classes.title}>
-                            Would you rather?
-                        </Typography>
+                        {appBar(gameId, clientType)}
                     </Toolbar>
                 </AppBar>
             </div>
@@ -111,7 +132,7 @@ function App() {
                         <TestWrapper />
                     </Route>
                     <Route path="/">
-                            {contentSwitch()}
+                        {contentSwitch()}
                     </Route>
                 </Switch>
             </Router>
@@ -125,9 +146,6 @@ const useStyles = makeStyles(theme => ({
     },
     icon: {
         marginRight: theme.spacing(2)
-    },
-    title: {
-        flexGrow: 1
     }
 }));
 

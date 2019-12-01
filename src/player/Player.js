@@ -72,8 +72,6 @@ const Player = ({gameId, playerName}) => {
     return (
         <div id="player-parent">
             {contentSwitch()}
-            <br/>
-            <div>Room {gameId}</div>
         </div>
     );
 };

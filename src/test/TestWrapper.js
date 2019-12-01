@@ -1,5 +1,7 @@
 import React from 'react';
-import CreateOrJoinForm from '../components/CreateOrJoinForm';
+import HostReveal from '../host/HostReveal';
+import {Route, Router, Switch} from 'react-router-dom';
+import Lobby from '../components/Lobby';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {
 
@@ -25,7 +27,7 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
     };
 
     // return <HostWaitingForQuestions players={players} questions={questions}/>;
-    // return <Lobby players={players} gameId={gameId} isHost />;
+    return <Lobby players={players} gameId={gameId} isHost onClick={()=>console.log("host lobby click")} />;
 
     const tallyVote = (aOrB, askerName, voterName) => {
         if (!players[askerName].votes) {
@@ -36,16 +38,16 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
     };
     const playerName = 'Claire';
 
-    // return <HostReveal players={players} />
+    // return <HostReveal players={players} />;
 
-    return <CreateOrJoinForm
-        setGameId={gameId => console.log('set game Id', gameId)}
-        setPlayerName={name => console.log('set player name', name)}
-        joinGame={() => console.log('join')}
-        createGame={() => console.log('create')}
-        playerNameError={"player name error"}
-        gameIdError={"game Id error"}
-    />;
+    // return <CreateOrJoinForm
+    //     setGameId={gameId => console.log('set game Id', gameId)}
+    //     setPlayerName={name => console.log('set player name', name)}
+    //     joinGame={() => console.log('join')}
+    //     createGame={() => console.log('create')}
+    //     playerNameError={"player name error"}
+    //     gameIdError={"game Id error"}
+    // />;
     // return <HostWaitingForAnswers players={players} />;
 
     // return <PlayerWaitingForOthers

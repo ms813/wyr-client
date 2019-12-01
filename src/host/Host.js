@@ -8,10 +8,12 @@ import PlayerState from '../player/PlayerState';
 import HostWaitingForAnswers from './HostWaitingForAnswers';
 import HostReveal from './HostReveal';
 import HostGameOver from './HostGameOver';
+import {MIN_PLAYERS} from '../config/Utils';
 
 const Host = ({gameId}) => {
     const [players, setPlayers] = useState({});
     const [hostState, setHostState] = useState(HostState.HOST_LOBBY);
+    const [errorText, setErrorText] = useState('');
     const firebase = useContext(FirebaseContext);
 
     useEffect(() => {
@@ -52,9 +54,20 @@ const Host = ({gameId}) => {
         }
     }, [hostState, firebase, gameId]);
 
+    const startGame = (hostState) => {
+        if (players && Object.keys(players).length >= MIN_PLAYERS) {
+            setHostState(hostState);
+            setErrorText('');
+            console.log('Start game');
+        } else {
+            const errorMsg = `Need at least ${MIN_PLAYERS} players to start a game!`;
+            setErrorText(errorMsg);
+            console.warn(errorMsg);
+        }
+    };
 
     const contentSwitch = (hostState) => {
-        const lobby = <Lobby gameId={gameId} players={players} isHost onClick={setHostState} />;
+        const lobby = <Lobby gameId={gameId} players={players} isHost onClick={startGame} errorText={errorText} />;
         switch (hostState) {
             case HostState.HOST_LOBBY:
                 return lobby;
