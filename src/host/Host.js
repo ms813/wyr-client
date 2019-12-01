@@ -86,7 +86,6 @@ const Host = ({gameId}) => {
 
     return (
         <div id="host-parent">
-            <h1>Room: {gameId}</h1>
             {contentSwitch(hostState)}
         </div>
     );

@@ -5,6 +5,13 @@ import FirebaseContext from '../firebase/FirebaseContext';
 import SpeechContext from '../speech/SpeakTtsContext';
 import {SpeechEvent} from '../speech/SpeechService';
 import Button from '@material-ui/core/Button';
+import {MIN_PLAYERS} from '../config/Utils';
+import List from '@material-ui/core/List';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import {ListItemText} from '@material-ui/core';
+import ListItem from '@material-ui/core/ListItem';
+import Box from '@material-ui/core/Box';
 
 const Lobby = ({gameId, players, isHost = false, onClick, errorText}) => {
 
@@ -31,27 +38,45 @@ const Lobby = ({gameId, players, isHost = false, onClick, errorText}) => {
         return ref.off;
     }, [firebase, gameId, isHost, speech]);
 
-    console.log("lobby error text", errorText);
+    console.log('lobby error text', errorText);
+    const playerCount = Object.keys(players).length;
     return (
         <div>
             <div>
-                <h1>{isHost ? 'You are the host' : 'You are in the lobby'} for {gameId}</h1>
-                {
-                    players
-                        ? (
-                            <ul>
-                                {Object.values(players).map(
-                                    ({name}) => <li key={name}>{name}</li>
-                                )}
-                            </ul>
-                        )
-                        : 'Waiting on players to join'
-                }
-                {
-                    isHost && <Button variant="contained" color="primary" size="large"
-                                      onClick={() => onClick(HostState.WAITING_FOR_QUESTIONS)}>Start</Button>
+                <Box textAlign="center">
+                    <h1>Welcome to {gameId}</h1>
+                    <h3>{players && playerCount >= MIN_PLAYERS
+                        ? `Ready to start!`
+                        : `Waiting on at least ${MIN_PLAYERS - playerCount} more players`
+                    }</h3>
+                </Box>
+                <Box justifyContent="center" display="flex">
+                    {
+                        players
+                            ? (
+                                <List>
+                                    {Object.values(players).map(({name}) =>
+                                        <ListItem>
+                                            <ListItemAvatar key={name}>
+                                                <Avatar>{name}</Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={name}
+                                                          secondary={name.toLowerCase() === 'phil' ? 'lol' : ''} />
+                                        </ListItem>
+                                    )}
+                                </List>
+                            )
+                            : 'Waiting on players to join'
+                    }
+                </Box>
+                <Box textAlign="center">
+                    {
+                        isHost && playerCount >= MIN_PLAYERS &&
+                        <Button variant="contained" color="primary" size="large" width="228px"
+                                onClick={() => onClick(HostState.WAITING_FOR_QUESTIONS)}>Start</Button>
 
-                }
+                    }
+                </Box>
             </div>
             {errorText && <div>{errorText}</div>}
         </div>
