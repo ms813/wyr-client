@@ -39,8 +39,7 @@ const Player = ({gameId, playerName}) => {
         setPlayerState(state);
     };
 
-    const tallyVote = (aOrB, askerName, voterName) =>
-        firebase.getPlayerRef(gameId, askerName).child(`/votes`).update({[voterName]: aOrB});
+    const tallyVote = (aOrB, askerName, voterName) => firebase.getPlayerRef(gameId, askerName).child(`/votes`).update({[voterName]: aOrB});
 
 
     const contentSwitch = () => {

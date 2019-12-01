@@ -4,9 +4,6 @@ import './index.css';
 import 'typeface-roboto';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
-import TestWrapper from './test/TestWrapper';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import FontAwesomeConfig from './config/FontAwesomeConfig';
 
 

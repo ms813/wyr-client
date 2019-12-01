@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
 import Lobby from '../components/Lobby';
 import HostState from './HostState';
 import FirebaseContext from '../firebase/FirebaseContext';
@@ -75,7 +74,7 @@ const Host = ({gameId}) => {
                 return <HostWaitingForQuestions players={players} setHostState={setHostState} />;
             case HostState.WAITING_FOR_ANSWERS:
                 return <HostWaitingForAnswers players={players} setHostState={setHostState} />;
-            case HostState.REVEAL_QUESTION:
+            case HostState.REVEAL:
                 return <HostReveal players={players} setHostState={setHostState} />;
             case HostState.GAME_OVER:
                 return <HostGameOver />;
@@ -89,10 +88,6 @@ const Host = ({gameId}) => {
             {contentSwitch(hostState)}
         </div>
     );
-};
-
-Host.propTypes = {
-    gameId: PropTypes.string
 };
 
 export default Host;

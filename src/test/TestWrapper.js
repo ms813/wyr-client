@@ -1,5 +1,6 @@
 import React from 'react';
-import PlayerWriteQuestions from '../player/PlayerWriteQuestions';
+import HostWaitingForAnswers from '../host/HostWaitingForAnswers';
+import PlayerWriteAnswers from '../player/PlayerWriteAnswers';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {
 
@@ -18,16 +19,14 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
         },
         Phil: {
             name: 'Phil',
-            optionA: 'beard',
-            optionB: 'mustache',
+            optionA: 'really long thin willy that can wrap around the earth 40 times',
+            optionB: 'red pepper soup, chilli prawns and maltesers all in one pot',
             votes: {Matt: 'A', Claire: 'A'}
         }
     };
 
-    // return <HostWaitingForQuestions players={players} questions={questions}/>;
-    // return <Lobby players={players} gameId={gameId} isHost onClick={()=>console.log("host lobby click")} />;
     const playerName = 'Claire';
-    return <PlayerWriteQuestions updatePlayerState={console.log} setA={console.log} setB={console.log} playerName={playerName}/>;
+
     const tallyVote = (aOrB, askerName, voterName) => {
         if (!players[askerName].votes) {
             players[askerName].votes = {};
@@ -36,7 +35,9 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
         players[askerName].votes[voterName] = aOrB;
     };
 
-
+    // return <HostWaitingForQuestions players={players} questions={questions}/>;
+    // return <Lobby players={players} gameId={gameId} isHost onClick={()=>console.log("host lobby click")} />;
+    // return <PlayerWriteQuestions updatePlayerState={console.log} setA={console.log} setB={console.log} playerName={playerName}/>;
     // return <HostReveal players={players} />;
 
     // return <CreateOrJoinForm
@@ -47,7 +48,7 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
     //     playerNameError={"player name error"}
     //     gameIdError={"game Id error"}
     // />;
-    // return <HostWaitingForAnswers players={players} />;
+    // return <HostWaitingForAnswers players={players} setHostState={console.log}/>;
 
     // return <PlayerWaitingForOthers
     //     players={players}
@@ -56,12 +57,12 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
     //     playerName={playerName}
     // />;
 
-    // return <PlayerWriteAnswers
-    //     players={players}
-    //     voterName="Matt"
-    //     tallyVote={tallyVote}
-    //     onFinish={()=>console.log('finished')}
-    // />;
+    return <PlayerWriteAnswers
+        players={players}
+        voterName="Matt"
+        tallyVote={tallyVote}
+        setVoterState={()=>console.log('finished')}
+    />;
 
 };
 
