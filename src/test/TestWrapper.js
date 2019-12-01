@@ -1,5 +1,5 @@
 import React from 'react';
-import Lobby from '../components/Lobby';
+import PlayerWriteQuestions from '../player/PlayerWriteQuestions';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {
 
@@ -25,8 +25,9 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
     };
 
     // return <HostWaitingForQuestions players={players} questions={questions}/>;
-    return <Lobby players={players} gameId={gameId} isHost onClick={()=>console.log("host lobby click")} />;
-
+    // return <Lobby players={players} gameId={gameId} isHost onClick={()=>console.log("host lobby click")} />;
+    const playerName = 'Claire';
+    return <PlayerWriteQuestions updatePlayerState={console.log} setA={console.log} setB={console.log} playerName={playerName}/>;
     const tallyVote = (aOrB, askerName, voterName) => {
         if (!players[askerName].votes) {
             players[askerName].votes = {};
@@ -34,7 +35,7 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
 
         players[askerName].votes[voterName] = aOrB;
     };
-    const playerName = 'Claire';
+
 
     // return <HostReveal players={players} />;
 

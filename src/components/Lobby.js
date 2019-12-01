@@ -43,7 +43,7 @@ const Lobby = ({gameId, players, isHost = false, onClick, errorText}) => {
         <div>
             <div>
                 <Box textAlign="center">
-                    <h1>Welcome to {gameId}</h1>
+                    <h2><small>Welcome to</small> <i>{gameId}</i></h2>
                     <h3>{players && playerCount >= MIN_PLAYERS
                         ? `Ready to start!`
                         : `Waiting on at least ${MIN_PLAYERS - playerCount} more players`
@@ -55,7 +55,7 @@ const Lobby = ({gameId, players, isHost = false, onClick, errorText}) => {
                             ? (
                                 <List>
                                     {Object.values(players).map(({name}) =>
-                                        <ListItem>
+                                        <ListItem key={name}>
                                             <ListItemAvatar key={name}>
                                                 <Avatar>{name}</Avatar>
                                             </ListItemAvatar>
