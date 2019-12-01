@@ -38,7 +38,6 @@ const Lobby = ({gameId, players, isHost = false, onClick, errorText}) => {
         return ref.off;
     }, [firebase, gameId, isHost, speech]);
 
-    console.log('lobby error text', errorText);
     const playerCount = Object.keys(players).length;
     return (
         <div>

@@ -23,7 +23,7 @@ const Host = ({gameId}) => {
             if (!snapshot || !snapshot.val()) {
                 return ref.off();
             }
-            return setPlayers(snapshot.val().players);
+            return setPlayers(snapshot.val().players || {});
         });
         return ref.off;
 

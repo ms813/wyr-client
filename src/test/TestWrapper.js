@@ -1,6 +1,4 @@
 import React from 'react';
-import HostReveal from '../host/HostReveal';
-import {Route, Router, Switch} from 'react-router-dom';
 import Lobby from '../components/Lobby';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {
