@@ -51,7 +51,7 @@ const HostWaitingForQuestions = ({players, setHostState}) => {
                         <ListItemAvatar>
                             <Avatar>{name}</Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary={name} secondary={name.toLowerCase() === 'phil' ? 'lol' : ''} />
+                        <ListItemText primary={name} secondary={Math.random() < 0.15 && name.toLowerCase() === 'phil' ? 'okily dokily' : ''} />
                         <ListItemSecondaryAction>{
                             hasQuestion(name)
                                 ? <FontAwesomeIcon icon="check-circle" size="2x" color="green" />

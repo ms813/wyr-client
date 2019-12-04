@@ -54,7 +54,7 @@ const HostWaitingForAnswers = ({players, setHostState}) => {
                         <ListItemAvatar>
                             <Avatar>{name}</Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary={name} secondary={name.toLowerCase() === 'phil' ? 'lol' : ''} />
+                        <ListItemText primary={name} secondary={Math.random() < 0.15 && name.toLowerCase() === 'phil' ? 'diddly' : ''} />
                         <ListItemSecondaryAction>{
                             remaining > 0
                                 ? <Fragment>{remaining} remaining <FontAwesomeIcon icon="times-circle" size="2x" color="red" /></Fragment>
@@ -71,22 +71,6 @@ const HostWaitingForAnswers = ({players, setHostState}) => {
                 </Box>
             }
         </Container>
-        // <div id="host-waiting-for-answers">
-        //     <ul>
-        //         {
-        //             answerCounts.map(({name, remaining}) =>
-        //                 <li key={name}>
-        //                     {name} {remaining > 0 ? `${remaining} remaining` : <FontAwesomeIcon icon="check-circle" />}
-        //                 </li>
-        //             )
-        //         }
-        //     </ul>
-        //     {
-        //         allPlayersAnswered
-        //         &&
-        //         <button type="button" onClick={() => setHostState(HostState.REVEAL_QUESTION)}>Next</button>
-        //     }
-        // </div>
     );
 };
 

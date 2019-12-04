@@ -60,7 +60,7 @@ const Lobby = ({gameId, players, isHost = false, onClick, errorText}) => {
                                                 <Avatar>{name}</Avatar>
                                             </ListItemAvatar>
                                             <ListItemText primary={name}
-                                                          secondary={name.toLowerCase() === 'phil' ? 'lol' : ''} />
+                                                          secondary={Math.random() < 0.15 && name.toLowerCase() === 'phil' ? 'howdy-do neighbour' : ''} />
                                         </ListItem>
                                     )}
                                 </List>

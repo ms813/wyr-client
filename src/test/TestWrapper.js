@@ -1,10 +1,17 @@
 import React from 'react';
-import HostWaitingForAnswers from '../host/HostWaitingForAnswers';
 import PlayerWriteAnswers from '../player/PlayerWriteAnswers';
+import HostReveal from '../host/HostReveal';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {
 
+
     const players = {
+        Phil: {
+            name: 'Phil',
+            optionA: 'medium line that is between',
+            optionB: 'thirty four and seventy chars this',
+            votes: {Matt: 'A', Claire: 'A'}
+        },
         Matt: {
             name: 'Matt',
             optionA: 'tea',
@@ -13,15 +20,9 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
         },
         Claire: {
             name: 'Claire',
-            optionA: 'orange',
-            optionB: 'apple',
+            optionA: 'really really really long line that is longer',
+            optionB: 'than 64 chars so needs a full line for each option',
             votes: {Matt: 'B', Phil: 'A'}
-        },
-        Phil: {
-            name: 'Phil',
-            optionA: 'really long thin willy that can wrap around the earth 40 times',
-            optionB: 'red pepper soup, chilli prawns and maltesers all in one pot',
-            votes: {Matt: 'A', Claire: 'A'}
         }
     };
 
@@ -38,7 +39,7 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
     // return <HostWaitingForQuestions players={players} questions={questions}/>;
     // return <Lobby players={players} gameId={gameId} isHost onClick={()=>console.log("host lobby click")} />;
     // return <PlayerWriteQuestions updatePlayerState={console.log} setA={console.log} setB={console.log} playerName={playerName}/>;
-    // return <HostReveal players={players} />;
+    return <HostReveal players={players} />;
 
     // return <CreateOrJoinForm
     //     setGameId={gameId => console.log('set game Id', gameId)}
@@ -61,7 +62,7 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
         players={players}
         voterName="Matt"
         tallyVote={tallyVote}
-        setVoterState={()=>console.log('finished')}
+        setVoterState={() => console.log('finished')}
     />;
 
 };

@@ -41,7 +41,6 @@ const Player = ({gameId, playerName}) => {
 
     const tallyVote = (aOrB, askerName, voterName) => firebase.getPlayerRef(gameId, askerName).child(`/votes`).update({[voterName]: aOrB});
 
-
     const contentSwitch = () => {
 
         const lobby = <Lobby gameId={gameId} players={players} isHost={false} />;

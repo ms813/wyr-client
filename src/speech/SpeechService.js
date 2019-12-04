@@ -14,7 +14,7 @@ class SpeechService {
         });
     }
 
-    speak(speechEvent, {voice, args} = {voice: null, args: null}) {
+    speak(speechEvent, {voice, args, listeners} = {voice: null, args: null}) {
         // exit early if voice is not initialized
         if (!this.speech.synthesisVoice) return;
 
@@ -24,7 +24,11 @@ class SpeechService {
         } else if (voice) {
             this.speech.setVoice(voice);
         }
-        this.speech.speak({text: t.line});
+
+        this.speech.speak({
+            text: t.line,
+            listeners: listeners
+        });
         this.speech.setVoice(DEFAULT_VOICE);
     }
 }
@@ -35,6 +39,7 @@ const SpeechEvent = {
     HOST_WAITING_FOR_QUESTIONS: 'HOST_WAITING_FOR_QUESTIONS',
     ALL_PLAYERS_WRITTEN_QUESTIONS: 'ALL_PLAYERS_WRITTEN_QUESTIONS',
     ALL_PLAYERS_ANSWERED: 'ALL_PLAYERS_ANSWERED',
+    REVEAL_PLAYER_NAME: 'REVEAL_PLAYER_NAME',
     REVEAL_QUESTION: 'REVEAL_QUESTION',
     REVEAL_FIRST_TIME: 'REVEAL_FIRST_TIME',
     REVEAL_ANSWER: 'REVEAL_ANSWER',
@@ -116,20 +121,26 @@ const voiceLines = {
         return chooseLineOrOverride(lines);
     },
 
+    [SpeechEvent.REVEAL_PLAYER_NAME]: ({name, overrideProbability}) => {
+        const lines = [
+            {line: `${name} asked.`}
+        ];
+        const overrides = {
+            phil: [
+                {line: `cheese steak 殿 asked.`, voice: 'Google 日本語'},
+                {line: `Big Phil asked.`, voice: 'Google français'}
+            ]
+        };
+        return chooseLineOrOverride(lines, name.toLowerCase(), overrides, overrideProbability);
+    },
+
     [SpeechEvent.REVEAL_QUESTION]: ({name, optionA, optionB, votes, overrideProbability}) => {
 
         const lines = [
-            {line: `${name} asked. Would you rather ${optionA} or ${optionB}`}
+            {line: `Would you rather ${optionA} or ${optionB}`}
         ];
 
-        const overrides = {
-            phil: [
-                {line: `cheese steak 殿 asked. ${optionA} or ${optionB}`, voice: 'Google 日本語'},
-                {line: `Big Phil asked. ${optionA} or ${optionB}`, voice: 'Google français'}
-            ]
-        };
-
-        return chooseLineOrOverride(lines, name.toLowerCase(), overrides);
+        return chooseLineOrOverride(lines);
     },
 
     [SpeechEvent.REVEAL_ANSWER]: ({name, answer, overrideProbability}) => {
@@ -139,9 +150,9 @@ const voiceLines = {
             {line: `${name} would rather ${answer}`}
         ];
 
-        const overrides =  {
+        const overrides = {
             phil: [
-                {line: `Flanders would rather Diddly`},
+                {line: `Flanders would rather Diddly`}
             ]
         };
 
