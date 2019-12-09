@@ -164,17 +164,21 @@ const voiceLines = {
     [SpeechEvent.REVEAL_QUESTION]: ({name, optionA, optionB, votes, overrideProbability}) => {
 
         const lines = [
-            {line: `Would you rather ${optionA} or ${optionB}`}
+            {line: `Would you rather ${optionA} or ${optionB}`},
+            {line: `${optionA} or ${optionB}`}
         ];
 
         return chooseLineOrOverride(lines);
     },
 
-    [SpeechEvent.REVEAL_ANSWER]: ({name, answer, overrideProbability}) => {
+    [SpeechEvent.REVEAL_ANSWER]: ({name, rather, than, overrideProbability}) => {
 
         const lines = [
-            {line: `${name} would rather ${answer}`},
-            {line: `${name} would rather ${answer}`}
+            {line: `${name} would rather ${rather}`},
+            {line: `${name} would rather ${rather} than ${than}`},
+            {line: `${rather} is ${name}'s preference`},
+            {line: `${name} prefers ${rather}`},
+            {line: `${name} prefers ${rather} to ${than}`},
         ];
 
         const overrides = {

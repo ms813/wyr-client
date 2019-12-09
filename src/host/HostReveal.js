@@ -56,7 +56,8 @@ const HostReveal = ({players, setHostState}) => {
             const vote = votes[name];
             const args = {
                 name: name,
-                answer: vote === 'A' ? optionA : optionB
+                rather: vote === 'A' ? optionA : optionB,
+                than: vote === 'B' ? optionA : optionB
             };
 
             // last round, need to increment the speech index one more time to make the next button appear
@@ -101,7 +102,7 @@ const HostReveal = ({players, setHostState}) => {
     };
 
     return (
-        <Container id="host-reveal">
+        <Container style={{overflowX: "hidden"}} id="host-reveal">
             {speechIndex <=0 && <Box py={2}><Typography variant="h2">Are you ready to see the answers?</Typography></Box>}
             <Slide direction="right" in={speechIndex > 0} mountOnEnter unmountOnExit>
                 <Box py={2}><Typography variant="h1">{name} asked:</Typography></Box>

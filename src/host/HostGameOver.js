@@ -13,13 +13,10 @@ const HostGameOver = ({onAgain}) => {
     }, [speech]);
 
     return (
-        <Box style={{overflowX: 'hidden'}} py={2} display="flex" flexDirection="column" alignItems="center" justifyContent="space-around"
+        <Box  py={2} textAlign="center" display="flex" flexDirection="column" alignItems="center" justifyContent="space-around"
              height="75vh">
-            <Typography display="block" variant="h2">
-                The game has finished.</Typography>
-            <Typography display="block" variant="h2">
-                Thanks for playing!
-            </Typography>
+            <Typography variant="h2">The game has finished.</Typography>
+            <Typography variant="h2">Thanks for playing!</Typography>
             <Box py={2}>
                 <Button variant="contained" color="primary" onClick={onAgain}>Again?</Button>
             </Box>
