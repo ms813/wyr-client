@@ -1,6 +1,13 @@
 import React from 'react';
 import PlayerWriteAnswers from '../player/PlayerWriteAnswers';
 import HostReveal from '../host/HostReveal';
+import HostGameOver from '../host/HostGameOver';
+import PlayerGameOver from '../player/PlayerGameOver';
+import PlayerWaitingForOthers from '../player/PlayerWaitingForOthers';
+import HostWaitingForQuestions from '../host/HostWaitingForQuestions';
+import HostWaitingForAnswers from '../host/HostWaitingForAnswers';
+import HostLobby from '../host/HostLobby';
+import PlayerLobby from '../player/PlayerLobby';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {
 
@@ -36,10 +43,13 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
         players[askerName].votes[voterName] = aOrB;
     };
 
-    // return <HostWaitingForQuestions players={players} questions={questions}/>;
-    // return <Lobby players={players} gameId={gameId} isHost onClick={()=>console.log("host lobby click")} />;
+    // return <HostWaitingForQuestions players={players} />;
+    // return <HostLobby players={players} gameId={gameId} onClick={()=>console.log("host lobby click")} />;
+    // return <PlayerLobby players={players} gameId={gameId} onClick={()=>console.log("host lobby click")} />;
     // return <PlayerWriteQuestions updatePlayerState={console.log} setA={console.log} setB={console.log} playerName={playerName}/>;
-    return <HostReveal players={players} />;
+    // return <PlayerGameOver />;
+    return <HostGameOver />;
+    // return <HostReveal players={players} />;
 
     // return <CreateOrJoinForm
     //     setGameId={gameId => console.log('set game Id', gameId)}
@@ -49,22 +59,21 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
     //     playerNameError={"player name error"}
     //     gameIdError={"game Id error"}
     // />;
-    // return <HostWaitingForAnswers players={players} setHostState={console.log}/>;
+    return <HostWaitingForAnswers players={players} setHostState={console.log}/>;
 
-    // return <PlayerWaitingForOthers
-    //     players={players}
-    //     optionA={players[playerName].optionA}
-    //     optionB={players[playerName].optionB}
-    //     playerName={playerName}
-    // />;
-
-    return <PlayerWriteAnswers
+    return <PlayerWaitingForOthers
         players={players}
-        voterName="Matt"
-        tallyVote={tallyVote}
-        setVoterState={() => console.log('finished')}
+        optionA={players[playerName].optionA}
+        optionB={players[playerName].optionB}
+        playerName={playerName}
     />;
 
+    // return <PlayerWriteAnswers
+    //     players={players}
+    //     voterName="Matt"
+    //     tallyVote={tallyVote}
+    //     setVoterState={() => console.log('finished')}
+    // />;
 };
 
 export default TestWrapper;

@@ -65,7 +65,7 @@ function App() {
     const createGame = () => {
         clearErrors();
         console.log('Creating new game...');
-        firebase.createGame((gameId) => {
+        firebase.createGame(null, (gameId) => {
             console.log('New game successfully created: ', gameId);
             firebase.getGameRef(gameId).once('value').then((snapshot) => {
                 if (snapshot.val()) {

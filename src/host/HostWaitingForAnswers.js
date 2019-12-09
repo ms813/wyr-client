@@ -1,5 +1,4 @@
-import React, {Fragment, useContext, useEffect, useState} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import React, {Fragment, useContext, useState} from 'react';
 import HostState from './HostState';
 import SpeechContext from '../speech/SpeakTtsContext';
 import {SpeechEvent} from '../speech/SpeechService';
@@ -12,6 +11,8 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import {Cancel, CheckCircle} from '@material-ui/icons';
+import Typography from '@material-ui/core/Typography';
 
 const HostWaitingForAnswers = ({players, setHostState}) => {
 
@@ -29,7 +30,7 @@ const HostWaitingForAnswers = ({players, setHostState}) => {
         return {name: player.name, remaining: answerCount};
     });
 
-    if(firstTime){
+    if (firstTime) {
         speech.speak(SpeechEvent.REQUEST_ANSWERS);
         setFirstTime(false);
     }
@@ -42,27 +43,31 @@ const HostWaitingForAnswers = ({players, setHostState}) => {
     }
 
     return (
-        <Container maxWidth="sm" id="host-waiting-for-answers">
-            <h2 style={{textAlign: 'center'}}>{
-                allPlayersAnswered
-                    ? `Everyone has submitted their answers`
-                    : `Waiting on everyone to submit their answers`
-            }</h2>
-            <List>
-                {answerCounts.map(({name, remaining}) =>
-                    <ListItem key={name}>
-                        <ListItemAvatar>
-                            <Avatar>{name}</Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={name} secondary={Math.random() < 0.15 && name.toLowerCase() === 'phil' ? 'diddly' : ''} />
-                        <ListItemSecondaryAction>{
-                            remaining > 0
-                                ? <Fragment>{remaining} remaining <FontAwesomeIcon icon="times-circle" size="2x" color="red" /></Fragment>
-                                : <FontAwesomeIcon icon="check-circle" size="2x" color="green" />
-                        }</ListItemSecondaryAction>
-                    </ListItem>
-                )}
-            </List>
+        <Container id="host-waiting-for-answers">
+            <Box textAlign="center" py={2}>
+                <Typography variant="h2">{
+                    allPlayersAnswered
+                        ? `Everyone has submitted their answers`
+                        : `Waiting on everyone to submit their answers`
+                }</Typography>
+            </Box>
+            <Container maxWidth="sm">
+                <List>
+                    {answerCounts.map(({name, remaining}) =>
+                        <ListItem key={name}>
+                            <ListItemAvatar>
+                                <Avatar>{name}</Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={name} secondary={Math.random() < 0.15 && name.toLowerCase() === 'phil' ? 'diddly' : ''} />
+                            <ListItemSecondaryAction>{
+                                remaining > 0
+                                    ? <Fragment>{remaining} remaining <Cancel fontSize="large" htmlColor="red" /></Fragment>
+                                    : <CheckCircle fontSize="large" htmlColor="green" />
+                            }</ListItemSecondaryAction>
+                        </ListItem>
+                    )}
+                </List>
+            </Container>
             {
                 allPlayersAnswered &&
                 <Box textAlign="center">

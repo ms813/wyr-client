@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
-import Lobby from '../components/Lobby';
 import FirebaseContext from '../firebase/FirebaseContext';
 import PlayerState from './PlayerState';
 import PlayerWriteQuestions from './PlayerWriteQuestions';
 import PlayerWriteAnswers from './PlayerWriteAnswers';
 import PlayerWaitingForOthers from './PlayerWaitingForOthers';
 import PlayerGameOver from './PlayerGameOver';
+import PlayerLobby from './PlayerLobby';
 
 const Player = ({gameId, playerName}) => {
     const [players, setPlayers] = useState({});
@@ -31,7 +31,9 @@ const Player = ({gameId, playerName}) => {
 
 
     useEffect(() => {
-        firebase.getPlayerRef(gameId, playerName).update({optionA, optionB});
+        if (optionA || optionB) {
+            firebase.getPlayerRef(gameId, playerName).update({optionA, optionB}, () => console.log(`Update ${playerName} options`));
+        }
     }, [optionA, optionB, firebase, gameId, playerName]);
 
     const updatePlayerState = (state) => {
@@ -41,9 +43,14 @@ const Player = ({gameId, playerName}) => {
 
     const tallyVote = (aOrB, askerName, voterName) => firebase.getPlayerRef(gameId, askerName).child(`/votes`).update({[voterName]: aOrB});
 
+    const leaveLobby = () => {
+        firebase.getPlayerRef(gameId, playerName).remove();
+        window.location.reload();
+    };
+
     const contentSwitch = () => {
 
-        const lobby = <Lobby gameId={gameId} players={players} isHost={false} />;
+        const lobby = <PlayerLobby gameId={gameId} players={players} onLeave={leaveLobby} />;
 
         switch (playerState) {
             case PlayerState.LOBBY:

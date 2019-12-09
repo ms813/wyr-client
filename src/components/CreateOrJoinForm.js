@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -13,10 +14,10 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'center'
     },
     inputField: {
-        paddingTop:  theme.spacing(1),
-        paddingBottom:  theme.spacing(1),
+        paddingTop: theme.spacing(1),
+        paddingBottom: theme.spacing(1),
         width: theme.spacing(36),
-        minWidth: theme.spacing(36),
+        minWidth: theme.spacing(36)
     }
 }));
 
@@ -24,7 +25,12 @@ const CreateOrJoinForm = ({setGameId, setPlayerName, joinGame, createGame, gameI
     const classes = useStyles();
     return (
         <div className={classes.root} id="create-or-join">
-            <p className={classes.center}>A group game for asking your granny stupid questions</p>
+            <Box py={2} textAlign="center">
+                <Typography variant="h2">Would you rather?</Typography>
+            </Box>
+            <Box py={2}>
+                <Typography className={classes.center}>A group game for asking your granny stupid questions</Typography>
+            </Box>
             <Box className={classes.center} display="flex" flexDirection="column" alignContent="center" flexWrap="wrap">
                 <Box className={classes.inputField}>
                     <TextField id="game-name-input" label="Room Name" variant="outlined"

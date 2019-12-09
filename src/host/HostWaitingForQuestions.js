@@ -1,7 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import SpeechContext from '../speech/SpeakTtsContext';
-import HostState from './HostState';
 import PlayerState from '../player/PlayerState';
 import {SpeechEvent} from '../speech/SpeechService';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,8 +9,11 @@ import {ListItemText} from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Container from '@material-ui/core/Container';
+import {Cancel, CheckCircle} from '@material-ui/icons';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import HostState from './HostState';
+import Typography from '@material-ui/core/Typography';
 
 const HostWaitingForQuestions = ({players, setHostState}) => {
 
@@ -39,27 +40,32 @@ const HostWaitingForQuestions = ({players, setHostState}) => {
     }
 
     return (
-        <Container maxWidth="sm" id="host-waiting-for-questions">
-            <h2 style={{textAlign: 'center'}}>{
-                allPlayersWrittenQuestions
-                    ? `Everyone has submitted a question`
-                    : `Waiting on everyone to submit a question`
-            }</h2>
-            <List>
-                {playerNames.map(name =>
-                    <ListItem key={name}>
-                        <ListItemAvatar>
-                            <Avatar>{name}</Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={name} secondary={Math.random() < 0.15 && name.toLowerCase() === 'phil' ? 'okily dokily' : ''} />
-                        <ListItemSecondaryAction>{
-                            hasQuestion(name)
-                                ? <FontAwesomeIcon icon="check-circle" size="2x" color="green" />
-                                : <FontAwesomeIcon icon="times-circle" size="2x" color="red" />
-                        }</ListItemSecondaryAction>
-                    </ListItem>
-                )}
-            </List>
+        <Container id="host-waiting-for-questions">
+            <Box textAlign="center" py={2}>
+                <Typography variant="h2">{
+                    allPlayersWrittenQuestions
+                        ? `Everyone has submitted a question`
+                        : `Waiting on everyone to submit a question`
+                }</Typography>
+            </Box>
+            <Container maxWidth="sm">
+                <List>
+                    {playerNames.map(name =>
+                        <ListItem key={name}>
+                            <ListItemAvatar>
+                                <Avatar>{name}</Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={name}
+                                          secondary={Math.random() < 0.15 && name.toLowerCase() === 'phil' ? 'okily dokily' : ''} />
+                            <ListItemSecondaryAction>{
+                                hasQuestion(name)
+                                    ? <CheckCircle fontSize="large" htmlColor="green" />
+                                    : <Cancel fontSize="large" htmlColor="red" />
+                            }</ListItemSecondaryAction>
+                        </ListItem>
+                    )}
+                </List>
+            </Container>
             {
                 allPlayersWrittenQuestions &&
                 <Box textAlign="center">

@@ -11,8 +11,10 @@ class FirebaseService {
         this.database = firebase.database();
     }
 
-    createGame(callback) {
-        const gameId = hri.random().replace(/-/gi, ' ');
+    createGame(gameId, callback) {
+        if(!gameId){
+            gameId = hri.random().replace(/-/gi, ' ');
+        }
         const newGame = {
             players: [],
             questions: [],
@@ -36,7 +38,7 @@ class FirebaseService {
         });
     }
 
-    getPlayersRef(gameId) {
+    getPlayersRef(gameId){
         return this.database.ref(`/games/${gameId}/players`);
     }
 

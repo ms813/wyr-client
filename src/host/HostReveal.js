@@ -12,7 +12,6 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Fade from '@material-ui/core/Fade';
-import Divider from '@material-ui/core/Divider';
 
 const HostReveal = ({players, setHostState}) => {
 
@@ -103,17 +102,19 @@ const HostReveal = ({players, setHostState}) => {
 
     return (
         <Container id="host-reveal">
+            {speechIndex <=0 && <Box py={2}><Typography variant="h2">Are you ready to see the answers?</Typography></Box>}
             <Slide direction="right" in={speechIndex > 0} mountOnEnter unmountOnExit>
                 <Box py={2}><Typography variant="h1">{name} asked:</Typography></Box>
             </Slide>
             <Slide direction="left" in={speechIndex > 1} mountOnEnter unmountOnExit>
                 {lineWrapQuestion(optionA, optionB)}
             </Slide>
-            <Divider />
+
             <Box pt={8} pb={16} pl={32} id="host-reveal-answers">
                 <List>{
                     Object.entries(votes).map(([name, vote], i) =>
-                        <Slide key={name} direction={speechIndex % 2 === 0 ? 'left' : 'right'} in={speechIndex > i + 2} mountOnEnter unmountOnExit>
+                        <Slide key={name} direction={speechIndex % 2 === 0 ? 'left' : 'right'} in={speechIndex > i + 2} mountOnEnter
+                               unmountOnExit>
                             <ListItem key={name}>
                                 <ListItemAvatar>
                                     <Avatar>{name}</Avatar>

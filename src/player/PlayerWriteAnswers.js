@@ -24,7 +24,7 @@ const PlayerWriteAnswers = ({players, voterName, tallyVote, setVoterState}) => {
         if (Object.keys(votes).length === Object.keys(players).length - 1) {
             return setVoterState(PlayerState.WAITING_FOR_OTHER_PLAYERS);
         }
-    }, [votes, players]);
+    }, [votes, players, setVoterState]);
 
     const updateVotes = (vote, askerName, voterName) => {
         const newVotes = Object.assign({}, votes);
@@ -45,8 +45,8 @@ const PlayerWriteAnswers = ({players, voterName, tallyVote, setVoterState}) => {
 
                     const radioName = `${p.name}-question`;
                     return (
-                        <Fragment>
-                            <Box key={radioName} my={5}>
+                        <Fragment key={radioName}>
+                            <Box my={5}>
                                 <Box textAlign="center">
                                     <ToggleButton className={classes.toggle} value="check" selected={votes[p.name] === 'A'} size="large"
                                                   onChange={() => updateVotes('A', p.name, voterName)}>{p.optionA}</ToggleButton>
@@ -57,7 +57,7 @@ const PlayerWriteAnswers = ({players, voterName, tallyVote, setVoterState}) => {
                                                   onChange={() => updateVotes('B', p.name, voterName)}>{p.optionB}</ToggleButton>
                                 </Box>
                             </Box>
-                            {i < Object.values(players).length - 1 && <Divider />}
+                            {i < Object.values(players).length - 2 && <Divider />}
                         </Fragment>
                     );
                 })

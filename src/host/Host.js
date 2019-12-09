@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import Lobby from '../components/Lobby';
+import HostLobby from './HostLobby';
 import HostState from './HostState';
 import FirebaseContext from '../firebase/FirebaseContext';
 import HostWaitingForQuestions from './HostWaitingForQuestions';
@@ -46,7 +46,6 @@ const Host = ({gameId}) => {
                 break;
             case HostState.GAME_OVER:
                 updateAllPlayersState(PlayerState.GAME_OVER);
-                firebase.getGameRef(gameId).remove();
                 break;
             default:
                 break;
@@ -65,8 +64,20 @@ const Host = ({gameId}) => {
         }
     };
 
+    const again = () => {
+        setHostState(HostState.HOST_LOBBY);
+        firebase.getPlayersRef(gameId).once('value', snapshot => {
+            snapshot.forEach(child => {
+                child.ref.set({
+                    name: child.val().name,
+                    state: PlayerState.LOBBY
+                });
+            });
+        });
+    };
+
     const contentSwitch = (hostState) => {
-        const lobby = <Lobby gameId={gameId} players={players} isHost onClick={startGame} errorText={errorText} />;
+        const lobby = <HostLobby gameId={gameId} players={players} onClick={startGame} errorText={errorText} />;
         switch (hostState) {
             case HostState.HOST_LOBBY:
                 return lobby;
@@ -77,7 +88,7 @@ const Host = ({gameId}) => {
             case HostState.REVEAL:
                 return <HostReveal players={players} setHostState={setHostState} />;
             case HostState.GAME_OVER:
-                return <HostGameOver />;
+                return <HostGameOver onAgain={again} />;
             default:
                 return lobby;
         }

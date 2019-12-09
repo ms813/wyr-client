@@ -36,6 +36,7 @@ class SpeechService {
 const SpeechEvent = {
     LOBBY_CREATED: 'LOBBY_CREATED',
     PLAYER_JOINED: 'PLAYER_JOINED',
+    PLAYER_LEFT: 'PLAYER_LEFT',
     HOST_WAITING_FOR_QUESTIONS: 'HOST_WAITING_FOR_QUESTIONS',
     ALL_PLAYERS_WRITTEN_QUESTIONS: 'ALL_PLAYERS_WRITTEN_QUESTIONS',
     ALL_PLAYERS_ANSWERED: 'ALL_PLAYERS_ANSWERED',
@@ -84,6 +85,17 @@ const voiceLines = {
         return chooseLineOrOverride(lines, playerName.toLowerCase(), overrides);
     },
 
+    [SpeechEvent.PLAYER_LEFT]: ({name: playerName, overrideProbability}) => {
+        const lines = [
+            {line: `${playerName} has left`},
+            {line: `Guess ${playerName} couldn't take the heat`},
+            {line: `Bye bye, ${playerName}`},
+            {line: `${playerName}, don't let the door hit you on the way out`}
+        ];
+
+        return chooseLineOrOverride(lines);
+    },
+
     [SpeechEvent.HOST_WAITING_FOR_QUESTIONS]: () => {
         const lines = [
             {line: 'All right glebe shots, would you rather what or what? Put in your questions now'}
@@ -102,21 +114,36 @@ const voiceLines = {
 
     [SpeechEvent.REQUEST_ANSWERS]: () => {
         const lines = [
-            {line: 'I mean, if you don\'t understand what to do by this point you are beyond any help I can provide. Answer the damn questions.'}
+            {line: `Choose your answers now`},
+            {line: `Please enter your answers`},
+            {line: `Please enter your answers to the questions`},
+            {line: `Enter some answers to the questions`},
+            {line: `Would you rather what or what? Time to let the world know`},
+            {line: `Answer the questions please`},
+            {line: `Answer the questions now`},
+            {line: `It's time to answer the questions`},
+            {line: `Answer the questions jabronis`},
+            {line: `Wow, its finally time to answer the questions`},
+            {line: `Put in your answers now`},
+            {line: `Please hurry up and put in your answers so we can end this charade`},
+            {line: `I mean, if you don't understand what to do by this point you are beyond any help I can provide. Answer the damn questions.`}
         ];
         return chooseLineOrOverride(lines);
     },
 
     [SpeechEvent.ALL_PLAYERS_ANSWERED]: () => {
         const lines = [
-            {line: 'Looks like everyone is finished, lets get this over with'}
+            {line: `Looks like everyone is finished, lets get this over with`},
+            {line: `I can hardly contain my excitement, we are ready to reveal all the questions and answers`},
         ];
         return chooseLineOrOverride(lines);
     },
 
     [SpeechEvent.REVEAL_FIRST_TIME]: ({players, overrideProbability}) => {
         const lines = [
-            {line: 'Finally, on to the big reveal'}
+            {line: 'Finally, on to the big reveal'},
+            {line: `Wow I'm so exited, let's see what everyone answered`},
+            {line: `That's 5 minutes that none of you will get back, lets see what you all wrote`},
         ];
         return chooseLineOrOverride(lines);
     },
@@ -175,7 +202,14 @@ const voiceLines = {
     [SpeechEvent.GAME_OVER]: () => {
 
         const lines = [
-            {line: `Looks like we're done here. Thanks for playing. Goodbye. Ta ta now. Au revoir. Adieu. Farewell. Get out of my pub muggins`}
+            {line: `Looks like we're done here. Thanks for playing. Goodbye. Ta ta now. Au revoir. Adieu. Farewell. Get out of my pub muggins`},
+            {line: `What a way to spend your day. Bye.`},
+            {line: `Thanks for playing, see you around`},
+            {line: `The game is over, thank you for playing`},
+            {line: `Game over chumps, goodbye`},
+            {line: `I'm out of here, bye`},
+            {line: `My shift is over and I have 8 kilos of cocaine with my name on it, later losers`},
+            {line: `This is the worst gig have had since being Kylie Minogue's foot stool, I'm glad its over`},
         ];
 
         return chooseLineOrOverride(lines);
