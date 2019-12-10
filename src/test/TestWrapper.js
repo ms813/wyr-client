@@ -1,13 +1,6 @@
 import React from 'react';
-import PlayerWriteAnswers from '../player/PlayerWriteAnswers';
 import HostReveal from '../host/HostReveal';
-import HostGameOver from '../host/HostGameOver';
-import PlayerGameOver from '../player/PlayerGameOver';
-import PlayerWaitingForOthers from '../player/PlayerWaitingForOthers';
-import HostWaitingForQuestions from '../host/HostWaitingForQuestions';
-import HostWaitingForAnswers from '../host/HostWaitingForAnswers';
-import HostLobby from '../host/HostLobby';
-import PlayerLobby from '../player/PlayerLobby';
+import Paint from '../components/Paint';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {
 
@@ -43,13 +36,19 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
         players[askerName].votes[voterName] = aOrB;
     };
 
+    const smallerDimension = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
+    const padding = 8;
+
+    return <Paint canvasHeight={smallerDimension - 2 * padding} canvasWidth={smallerDimension - 2 * padding} />;
+    // return <Paint />;
+
     // return <HostWaitingForQuestions players={players} />;
     // return <HostLobby players={players} gameId={gameId} onClick={()=>console.log("host lobby click")} />;
     // return <PlayerLobby players={players} gameId={gameId} onClick={()=>console.log("host lobby click")} />;
     // return <PlayerWriteQuestions updatePlayerState={console.log} setA={console.log} setB={console.log} playerName={playerName}/>;
     // return <PlayerGameOver />;
     // return <HostGameOver />;
-    return <HostReveal players={players} />;
+    // return <HostReveal players={players} />;
 
     // return <CreateOrJoinForm
     //     setGameId={gameId => console.log('set game Id', gameId)}

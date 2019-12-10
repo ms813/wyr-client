@@ -20,11 +20,11 @@ const Host = ({gameId}) => {
 
         ref.on('value', (snapshot) => {
             if (!snapshot || !snapshot.val()) {
-                return ref.off();
+                return ref.off('value');
             }
             return setPlayers(snapshot.val().players || {});
         });
-        return ref.off;
+        return () => ref.off('value');
 
     }, [firebase, gameId]);
 

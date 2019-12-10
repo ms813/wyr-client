@@ -20,13 +20,13 @@ const Player = ({gameId, playerName}) => {
         const ref = firebase.getGameRef(gameId);
         ref.on('value', (snapshot) => {
             if (!snapshot || !snapshot.val()) {
-                return ref.off();
+                return ref.off('value');
             }
             const {players: _players} = snapshot.val();
             setPlayers(_players);
             setPlayerState(_players[playerName].state);
         });
-        return ref.off;
+        return () => ref.off('value');
     }, [firebase, gameId, playerName]);
 
 

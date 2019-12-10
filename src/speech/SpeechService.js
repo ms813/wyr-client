@@ -142,7 +142,7 @@ const voiceLines = {
     [SpeechEvent.REVEAL_FIRST_TIME]: ({players, overrideProbability}) => {
         const lines = [
             {line: 'Finally, on to the big reveal'},
-            {line: `Wow I'm so exited, let's see what everyone answered`},
+            {line: `Wow I'm so excited, let's see what everyone answered`},
             {line: `That's 5 minutes that none of you will get back, lets see what you all wrote`},
         ];
         return chooseLineOrOverride(lines);
