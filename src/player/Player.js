@@ -6,6 +6,7 @@ import PlayerWriteAnswers from './PlayerWriteAnswers';
 import PlayerWaitingForOthers from './PlayerWaitingForOthers';
 import PlayerGameOver from './PlayerGameOver';
 import PlayerLobby from './PlayerLobby';
+import Paint from '../components/Paint';
 
 const Player = ({gameId, playerName}) => {
     const [players, setPlayers] = useState({});
@@ -37,8 +38,16 @@ const Player = ({gameId, playerName}) => {
     }, [optionA, optionB, firebase, gameId, playerName]);
 
     const updatePlayerState = (state) => {
-        firebase.getPlayerRef(gameId, playerName).update({state: state});
+        firebase.getPlayerRef(gameId, playerName).update({state});
         setPlayerState(state);
+    };
+
+    const updatePlayerImageUri = (avatarUri) => {
+        firebase.getPlayerRef(gameId, playerName).update({avatarUri}, (err) => {
+            if (!err) {
+                updatePlayerState(PlayerState.LOBBY);
+            }
+        });
     };
 
     const tallyVote = (aOrB, askerName, voterName) => firebase.getPlayerRef(gameId, askerName).child(`/votes`).update({[voterName]: aOrB});
@@ -53,6 +62,10 @@ const Player = ({gameId, playerName}) => {
         const lobby = <PlayerLobby gameId={gameId} players={players} onLeave={leaveLobby} />;
 
         switch (playerState) {
+            case PlayerState.CREATE_AVATAR:
+                const smallerDimension = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
+                const padding = 8;
+                return <Paint saveImage={updatePlayerImageUri} canvasHeight={250} canvasWidth={250} />;
             case PlayerState.LOBBY:
                 return lobby;
             case PlayerState.WRITING_QUESTION:

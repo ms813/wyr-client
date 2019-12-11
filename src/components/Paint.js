@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Layer, Line, Stage} from 'react-konva';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import {CompactPicker} from 'react-color';
 
-const Paint = ({canvasWidth = 200, canvasHeight = 200}) => {
+const Paint = ({saveImage, canvasWidth = 200, canvasHeight = 200}) => {
 
     const [dragging, setDragging] = useState(false);
     const [lines, setLines] = useState([]);
@@ -13,6 +13,8 @@ const Paint = ({canvasWidth = 200, canvasHeight = 200}) => {
     const [canvasX, setCanvasX] = useState();
     const [canvasY, setCanvasY] = useState();
     const [color, setColor] = useState({hex: '0x000000'});
+
+    const stageRef = useRef();
 
     useEffect(() => {
         if (canvas) {
@@ -76,7 +78,8 @@ const Paint = ({canvasWidth = 200, canvasHeight = 200}) => {
 
     return (
         <Box px={1}>
-            <Stage width={canvasWidth}
+            <Stage ref={stageRef}
+                   width={canvasWidth}
                    height={canvasHeight}
                    onMouseUp={e => mouseUp(e)}
                    onMouseDown={e => mouseDown(e)}
@@ -94,8 +97,13 @@ const Paint = ({canvasWidth = 200, canvasHeight = 200}) => {
                     </Layer>
                 }
             </Stage>
-            <Button variant="contained" onClick={undo}>Undo</Button>
-            <CompactPicker onChangeComplete={setColor} />
+            <Box py={1} textAlign="center">
+                <CompactPicker onChangeComplete={setColor} />
+            </Box>
+            <Box py={1} display="flex" justifyContent="space-around">
+                <Button variant="contained" onClick={undo}>Undo</Button>
+                <Button variant="contained" color="primary" onClick={() => saveImage(stageRef.current.getStage().toDataURL())}>Save</Button>
+            </Box>
         </Box>
     );
 };

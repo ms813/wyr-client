@@ -14,9 +14,19 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import {CheckCircle} from '@material-ui/icons';
+import {Cancel, CheckCircle} from '@material-ui/icons';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+
+const useStyles = makeStyles(theme => ({
+    bigAvatar: {
+        width: 100,
+        height: 100
+    }
+}));
 
 const HostLobby = ({gameId, players, onClick, errorText}) => {
+
+    const classes = useStyles();
 
     const firebase = useContext(FirebaseContext);
     const speech = useContext(SpeechContext);
@@ -65,14 +75,18 @@ const HostLobby = ({gameId, players, onClick, errorText}) => {
                     players
                         ? (
                             <List>
-                                {Object.values(players).map(({name}) =>
+                                {Object.values(players).map(({name, avatarUri}) =>
                                     <ListItem key={name}>
                                         <ListItemAvatar>
-                                            <Avatar>{name}</Avatar>
+                                            <Avatar src={avatarUri} className={classes.bigAvatar} variant="square">{name}</Avatar>
                                         </ListItemAvatar>
                                         <ListItemText primary={name}
                                                       secondary={Math.random() < 0.15 && name.toLowerCase() === 'phil' ? 'howdy-do neighbour' : ''} />
-                                        <ListItemSecondaryAction><CheckCircle fontSize="large" htmlColor="green" /></ListItemSecondaryAction>
+                                        <ListItemSecondaryAction>{
+                                            avatarUri
+                                                ? <CheckCircle fontSize="large" htmlColor="green" />
+                                                : <Cancel fontSize="large" htmlColor="red" />
+                                        }</ListItemSecondaryAction>
                                     </ListItem>
                                 )}
                             </List>

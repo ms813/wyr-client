@@ -12,8 +12,18 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Fade from '@material-ui/core/Fade';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+
+const useStyles = makeStyles(theme => ({
+    bigAvatar: {
+        width: 100,
+        height: 100
+    }
+}));
 
 const HostReveal = ({players, setHostState}) => {
+
+    const classes = useStyles();
 
     const commentProbability = 0.15;
     const speech = useContext(SpeechContext);
@@ -25,6 +35,7 @@ const HostReveal = ({players, setHostState}) => {
 
     useEffect(() => {
         setSpeechIndex(0);
+        // setTimeout(() => setSpeechIndex(0), 500);
     }, [index]);
 
     useEffect(() => {
@@ -102,10 +113,17 @@ const HostReveal = ({players, setHostState}) => {
     };
 
     return (
-        <Container style={{overflowX: "hidden"}} id="host-reveal">
-            {speechIndex <=0 && <Box py={2}><Typography variant="h2">Are you ready to see the answers?</Typography></Box>}
+        <Container style={{overflowX: 'hidden'}} id="host-reveal">
+            {speechIndex <= 0 && <Box py={2}><Typography variant="h2">Are you ready to see the answers?</Typography></Box>}
             <Slide direction="right" in={speechIndex > 0} mountOnEnter unmountOnExit>
-                <Box py={2}><Typography variant="h1">{name} asked:</Typography></Box>
+                <Box py={2} display="flex">
+                    <Avatar src={players[name].avatarUri} className={classes.bigAvatar}
+                                                  variant="square">{name}</Avatar>
+
+
+                        <Typography variant="h1">{name} asked:</Typography>
+
+                </Box>
             </Slide>
             <Slide direction="left" in={speechIndex > 1} mountOnEnter unmountOnExit>
                 {lineWrapQuestion(optionA, optionB)}
@@ -118,7 +136,7 @@ const HostReveal = ({players, setHostState}) => {
                                unmountOnExit>
                             <ListItem key={name}>
                                 <ListItemAvatar>
-                                    <Avatar>{name}</Avatar>
+                                    <Avatar src={players[name].avatarUri} className={classes.bigAvatar} variant="square">{name}</Avatar>
                                 </ListItemAvatar>
                                 <ListItemText primaryTypographyProps={{variant: 'h5'}}
                                               primary={<Fragment>{name} would rather <i>{vote === 'A' ? optionA : optionB}</i></Fragment>}

@@ -15,7 +15,18 @@ import Button from '@material-ui/core/Button';
 import HostState from './HostState';
 import Typography from '@material-ui/core/Typography';
 
+import makeStyles from '@material-ui/core/styles/makeStyles';
+
+const useStyles = makeStyles(theme => ({
+    bigAvatar: {
+        width: 100,
+        height: 100
+    }
+}));
+
 const HostWaitingForQuestions = ({players, setHostState}) => {
+
+    const classes = useStyles();
 
     const speech = useContext(SpeechContext);
     const [announceFinished, setAnnounceFinished] = useState(true);
@@ -53,7 +64,7 @@ const HostWaitingForQuestions = ({players, setHostState}) => {
                     {playerNames.map(name =>
                         <ListItem key={name}>
                             <ListItemAvatar>
-                                <Avatar>{name}</Avatar>
+                                <Avatar src={players[name].avatarUri} className={classes.bigAvatar} variant="square">{name}</Avatar>
                             </ListItemAvatar>
                             <ListItemText primary={name}
                                           secondary={Math.random() < 0.15 && name.toLowerCase() === 'phil' ? 'okily dokily' : ''} />

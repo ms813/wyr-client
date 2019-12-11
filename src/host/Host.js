@@ -68,8 +68,10 @@ const Host = ({gameId}) => {
         setHostState(HostState.HOST_LOBBY);
         firebase.getPlayersRef(gameId).once('value', snapshot => {
             snapshot.forEach(child => {
+                const {name, avatarUri} = child.val();
                 child.ref.set({
-                    name: child.val().name,
+                    name,
+                    avatarUri,
                     state: PlayerState.LOBBY
                 });
             });

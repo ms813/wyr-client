@@ -4,7 +4,7 @@ import SpeechService from './SpeechService';
 const DEFAULT_VOICE = 'Google UK English Male';
 
 const speechContext = {
-    volume: 0.7,
+    volume: 1,
     lang: 'en-GB',
     rate: 1,
     pitch: 1,
