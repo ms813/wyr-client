@@ -31,11 +31,11 @@ const HostWaitingForQuestions = ({players, setHostState}) => {
     const speech = useContext(SpeechContext);
     const [announceFinished, setAnnounceFinished] = useState(true);
 
-    useEffect(() => {
-        speech.speak(SpeechEvent.HOST_WAITING_FOR_QUESTIONS);
-    }, [speech]);
-
     const playerNames = Object.keys(players);
+
+    useEffect(() => {
+        speech.speak(SpeechEvent.HOST_WAITING_FOR_QUESTIONS, {args: {playerNames}});
+    }, [speech]);
 
     const hasQuestion = (playerName) => {
         const player = players[playerName];
