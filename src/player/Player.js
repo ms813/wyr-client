@@ -63,8 +63,6 @@ const Player = ({gameId, playerName}) => {
 
         switch (playerState) {
             case PlayerState.CREATE_AVATAR:
-                const smallerDimension = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
-                const padding = 8;
                 return <Paint saveImage={updatePlayerImageUri} canvasHeight={250} canvasWidth={250} />;
             case PlayerState.LOBBY:
                 return lobby;

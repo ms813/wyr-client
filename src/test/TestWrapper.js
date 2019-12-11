@@ -8,8 +8,8 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
     const players = {
         Phil: {
             name: 'Phil',
-            optionA: 'medium line that is between',
-            optionB: 'thirty four and seventy chars this',
+            optionA: 'Stilton',
+            optionB: 'Brie',
             votes: {Matt: 'A', Claire: 'A'}
         },
         Matt: {
@@ -20,8 +20,8 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
         },
         Claire: {
             name: 'Claire',
-            optionA: 'really really really long line that is longer',
-            optionB: 'than 64 chars so needs a full line for each option',
+            optionA: 'Red pepper soup',
+            optionB: 'Chilli prawns',
             votes: {Matt: 'B', Phil: 'A'}
         }
     };
@@ -36,10 +36,7 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
         players[askerName].votes[voterName] = aOrB;
     };
 
-    const smallerDimension = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
-    const padding = 8;
-
-    return <Paint canvasHeight={smallerDimension - 2 * padding} canvasWidth={smallerDimension - 2 * padding} />;
+    return <Paint saveImage={console.log} canvasHeight={250} canvasWidth={250} />;
     // return <Paint />;
 
     // return <HostWaitingForQuestions players={players} />;

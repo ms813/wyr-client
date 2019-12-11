@@ -67,7 +67,7 @@ const Paint = ({saveImage, canvasWidth = 200, canvasHeight = 200}) => {
         }
     };
     const drawLine = () => {
-        const line = <Line points={currentPoints} stroke={color.hex} strokeWidth={2} />;
+        const line = <Line key={`line-${lines.length}`} points={currentPoints} stroke={color.hex} strokeWidth={2} />;
         setLines([...lines, line]);
     };
 
@@ -77,7 +77,7 @@ const Paint = ({saveImage, canvasWidth = 200, canvasHeight = 200}) => {
     };
 
     return (
-        <Box px={1}>
+        <Box px={1} display="flex" flexDirection="column"  alignItems="center">
             <Stage ref={stageRef}
                    width={canvasWidth}
                    height={canvasHeight}
@@ -100,7 +100,7 @@ const Paint = ({saveImage, canvasWidth = 200, canvasHeight = 200}) => {
             <Box py={1} textAlign="center">
                 <CompactPicker onChangeComplete={setColor} />
             </Box>
-            <Box py={1} display="flex" justifyContent="space-around">
+            <Box py={1} display="flex" flexDirection="row" justifyContent="space-around" width={canvasWidth}>
                 <Button variant="contained" onClick={undo}>Undo</Button>
                 <Button variant="contained" color="primary" onClick={() => saveImage(stageRef.current.getStage().toDataURL())}>Save</Button>
             </Box>
