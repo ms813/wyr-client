@@ -42,14 +42,14 @@ const HostWaitingForAnswers = ({players, setHostState}) => {
     });
 
     if (firstTime) {
-        speech.speak(SpeechEvent.REQUEST_ANSWERS);
+        speech.speak(SpeechEvent.REQUEST_ANSWERS, {args: {playerNames: Object.keys(players)}});
         setFirstTime(false);
     }
 
     const allPlayersAnswered = answerCounts.filter(a => a.remaining !== 0).length === 0;
     if (allPlayersAnswered && allAnsweredFirstTime) {
         // triggered multiple times because of player state changes
-        speech.speak(SpeechEvent.ALL_PLAYERS_ANSWERED);
+        speech.speak(SpeechEvent.ALL_PLAYERS_ANSWERED, {args: {playerNames: Object.keys(players)}});
         setAllAnsweredFirstTime(false);
     }
 
