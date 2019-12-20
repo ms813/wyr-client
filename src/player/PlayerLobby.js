@@ -11,8 +11,18 @@ import Container from '@material-ui/core/Container';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import {CheckCircle} from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+
+const useStyles = makeStyles(theme => ({
+    bigAvatar: {
+        width: 100,
+        height: 100
+    }
+}));
 
 const PlayerLobby = ({gameId, players, onLeave, errorText}) => {
+
+    const classes = useStyles();
 
     const playerCount = Object.keys(players).length;
     return (
@@ -33,10 +43,10 @@ const PlayerLobby = ({gameId, players, onLeave, errorText}) => {
                 <Container maxWidth="sm">{
                     players ? (
                             <List>{
-                                Object.values(players).map(({name}) =>
+                                Object.values(players).map(({name, avatarUri}) =>
                                     <ListItem key={name}>
                                         <ListItemAvatar>
-                                            <Avatar>{name}</Avatar>
+                                            <Avatar src={avatarUri} className={classes.bigAvatar} variant="square">{name}</Avatar>
                                         </ListItemAvatar>
                                         <ListItemText primary={name}
                                                       secondary={Math.random() < 0.15 && name.toLowerCase() === 'phil' ? 'howdy-do neighbour' : ''} />
@@ -49,7 +59,9 @@ const PlayerLobby = ({gameId, players, onLeave, errorText}) => {
                         )
                         : 'Waiting on players to join'
                 }</Container>
-                <Button variant="contained" color="secondary" onClick={onLeave}>Leave Lobby</Button>
+                <Box textAlign="center">
+                    <Button variant="contained" color="secondary" onClick={onLeave}>Leave Lobby</Button>
+                </Box>
             </div>
             {errorText && <div>{errorText}</div>}
         </div>

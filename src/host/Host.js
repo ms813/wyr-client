@@ -20,11 +20,11 @@ const Host = ({gameId}) => {
 
         ref.on('value', (snapshot) => {
             if (!snapshot || !snapshot.val()) {
-                return ref.off();
+                return ref.off('value');
             }
             return setPlayers(snapshot.val().players || {});
         });
-        return ref.off;
+        return () => ref.off('value');
 
     }, [firebase, gameId]);
 
@@ -68,8 +68,10 @@ const Host = ({gameId}) => {
         setHostState(HostState.HOST_LOBBY);
         firebase.getPlayersRef(gameId).once('value', snapshot => {
             snapshot.forEach(child => {
+                const {name, avatarUri} = child.val();
                 child.ref.set({
-                    name: child.val().name,
+                    name,
+                    avatarUri,
                     state: PlayerState.LOBBY
                 });
             });

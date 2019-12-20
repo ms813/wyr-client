@@ -6,6 +6,9 @@ import PlayerWriteAnswers from './PlayerWriteAnswers';
 import PlayerWaitingForOthers from './PlayerWaitingForOthers';
 import PlayerGameOver from './PlayerGameOver';
 import PlayerLobby from './PlayerLobby';
+import Paint from '../components/Paint';
+import {Typography} from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 
 const Player = ({gameId, playerName}) => {
     const [players, setPlayers] = useState({});
@@ -20,13 +23,13 @@ const Player = ({gameId, playerName}) => {
         const ref = firebase.getGameRef(gameId);
         ref.on('value', (snapshot) => {
             if (!snapshot || !snapshot.val()) {
-                return ref.off();
+                return ref.off('value');
             }
             const {players: _players} = snapshot.val();
             setPlayers(_players);
             setPlayerState(_players[playerName].state);
         });
-        return ref.off;
+        return () => ref.off('value');
     }, [firebase, gameId, playerName]);
 
 
@@ -37,8 +40,16 @@ const Player = ({gameId, playerName}) => {
     }, [optionA, optionB, firebase, gameId, playerName]);
 
     const updatePlayerState = (state) => {
-        firebase.getPlayerRef(gameId, playerName).update({state: state});
+        firebase.getPlayerRef(gameId, playerName).update({state});
         setPlayerState(state);
+    };
+
+    const updatePlayerImageUri = (avatarUri) => {
+        firebase.getPlayerRef(gameId, playerName).update({avatarUri}, (err) => {
+            if (!err) {
+                updatePlayerState(PlayerState.LOBBY);
+            }
+        });
     };
 
     const tallyVote = (aOrB, askerName, voterName) => firebase.getPlayerRef(gameId, askerName).child(`/votes`).update({[voterName]: aOrB});
@@ -53,6 +64,13 @@ const Player = ({gameId, playerName}) => {
         const lobby = <PlayerLobby gameId={gameId} players={players} onLeave={leaveLobby} />;
 
         switch (playerState) {
+            case PlayerState.CREATE_AVATAR:
+                return (
+                    <Box textAlign="center">
+                        <Typography variant="h6">Draw an avatar!</Typography>
+                        <Paint saveImage={updatePlayerImageUri} canvasHeight={250} canvasWidth={250} />
+                    </Box>
+                );
             case PlayerState.LOBBY:
                 return lobby;
             case PlayerState.WRITING_QUESTION:

@@ -1,22 +1,16 @@
-import React from 'react';
-import PlayerWriteAnswers from '../player/PlayerWriteAnswers';
+import React, {useState} from 'react';
 import HostReveal from '../host/HostReveal';
-import HostGameOver from '../host/HostGameOver';
-import PlayerGameOver from '../player/PlayerGameOver';
-import PlayerWaitingForOthers from '../player/PlayerWaitingForOthers';
-import HostWaitingForQuestions from '../host/HostWaitingForQuestions';
-import HostWaitingForAnswers from '../host/HostWaitingForAnswers';
+import Paint from '../components/Paint';
 import HostLobby from '../host/HostLobby';
-import PlayerLobby from '../player/PlayerLobby';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {
-
+    const [ready, setReady] = useState(false);
 
     const players = {
         Phil: {
             name: 'Phil',
-            optionA: 'medium line that is between',
-            optionB: 'thirty four and seventy chars this',
+            optionA: 'Stilton',
+            optionB: 'Brie',
             votes: {Matt: 'A', Claire: 'A'}
         },
         Matt: {
@@ -27,8 +21,8 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
         },
         Claire: {
             name: 'Claire',
-            optionA: 'really really really long line that is longer',
-            optionB: 'than 64 chars so needs a full line for each option',
+            optionA: 'Red pepper soup',
+            optionB: 'Chilli prawns',
             votes: {Matt: 'B', Phil: 'A'}
         }
     };
@@ -43,13 +37,23 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
         players[askerName].votes[voterName] = aOrB;
     };
 
+    // return <Paint saveImage={console.log} canvasHeight={250} canvasWidth={250} />;
+    // return <Paint />;
+
     // return <HostWaitingForQuestions players={players} />;
-    // return <HostLobby players={players} gameId={gameId} onClick={()=>console.log("host lobby click")} />;
+    setTimeout(()=> setReady(true), 500);
+
+    if(ready){
+        return <HostLobby players={players} gameId={gameId} onClick={()=>console.log("host lobby click")} />;
+    } else {
+        return "Loading..."
+    }
+
     // return <PlayerLobby players={players} gameId={gameId} onClick={()=>console.log("host lobby click")} />;
     // return <PlayerWriteQuestions updatePlayerState={console.log} setA={console.log} setB={console.log} playerName={playerName}/>;
     // return <PlayerGameOver />;
     // return <HostGameOver />;
-    return <HostReveal players={players} />;
+    // return <HostReveal players={players} />;
 
     // return <CreateOrJoinForm
     //     setGameId={gameId => console.log('set game Id', gameId)}

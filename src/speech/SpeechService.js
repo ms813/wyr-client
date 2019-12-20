@@ -52,10 +52,18 @@ const SpeechEvent = {
 const voiceLines = {
     [SpeechEvent.LOBBY_CREATED]: ({gameId, overrideProbability}) => {
         const lines = [
-            {line: `Welcome to ${gameId}`}
+            {line: `Welcome to ${gameId}`},
+            {line: `${gameId} is open for business`},
+            {line: `Type in ${gameId} in the room name field to play`},
+            {line: `Enter in ${gameId} in the room name box`},
+            {line: `Roll up, roll up, ${gameId} is open`},
+            {line: `${gameId} is ready for a game of Would You Rather?`},
+            {line: `Tell your granny, ${gameId} is open`},
+            {line: `${gameId} is hosted and ready for action`},
+            {line: `Hello and welcome to ${gameId}`},
+            {line: `Greetings and welcome to ${gameId}`},
+            {line: `${gameId} created and waiting for players`}
         ];
-
-        const overrides = {};
 
         return chooseLineOrOverride(lines);
     },
@@ -63,22 +71,34 @@ const voiceLines = {
     [SpeechEvent.PLAYER_JOINED]: ({name: playerName, overrideProbability}) => {
         const lines = [
             {line: `${playerName} has joined`},
-            {line: `Welcome, ${playerName}`}
+            {line: `${playerName} has signed up`},
+            {line: `${playerName} has entered the building`},
+            {line: `${playerName} is ready`},
+            {line: `${playerName} is ready for action`},
+            {line: `${playerName} is down to play`},
+            {line: `${playerName} is prepared`},
+            {line: `${playerName} is hungry for knowledge`},
+            {line: `${playerName} wants to play`},
+            {line: `${playerName} loves fun`},
+            {line: `${playerName} figured out how to join`},
+            {line: `Welcome, ${playerName}`},
+            {line: `Greetings ${playerName}`},
+            {line: `Hello, ${playerName}`}
         ];
         const overrides = {
             phil: [
                 {
                     line: `moshi moshi phil ${Math.random() > 0.5 ? 'dono' : 'san'}`,
-                    voice: 'Google 日本語'
+                    voice: `Google 日本語`
                 },
                 {
-                    line: 'Bonjour... big Phil',
-                    voice: 'Google français'
+                    line: `Bonjour... big Phil`,
+                    voice: `Google français`
                 },
-                {line: 'Let us all pause for a moment and take stock of the wonder that is big Phil'}
+                {line: `Let us all pause for a moment and take stock of the wonder that is big Phil`}
             ],
             claire: [
-                {line: 'Claire has joined, wub wub pipette that mouse angus'}
+                {line: `Claire has joined, wub wub pipette that mouse angus`}
             ]
         };
 
@@ -96,9 +116,15 @@ const voiceLines = {
         return chooseLineOrOverride(lines);
     },
 
-    [SpeechEvent.HOST_WAITING_FOR_QUESTIONS]: () => {
+    [SpeechEvent.HOST_WAITING_FOR_QUESTIONS]: ({playerNames}) => {
         const lines = [
-            {line: 'All right glebe shots, would you rather what or what? Put in your questions now'}
+            {line: `Would you rather what or what? Put in your questions now`},
+            {line: `All right folks, would you rather what or what? Put in your questions now`},
+            {line: `Time to ask some questions, what do you want to know about ${playerNames[randomBetween(0, playerNames.length - 1)]}?`},
+            {line: `Enter your burning questions in the boxes`},
+            {line: `Would you rather what or what? Time to enter your questions`},
+            {line: `Would you rather what or what? Time to ask others what you've always wanted to know`},
+            {line: `Ask the rest of the players what they would rather`}
         ];
 
         return chooseLineOrOverride(lines);
@@ -106,7 +132,16 @@ const voiceLines = {
 
     [SpeechEvent.ALL_PLAYERS_WRITTEN_QUESTIONS]: () => {
         const lines = [
-            {line: 'All players have finished writing their questions. Lets move on...'}
+            {line: `All players have finished writing their questions. Lets move on...`},
+            {line: `All players have finished writing their questions. The host should move on`},
+            {line: `Everyone has finished writing their questions. The host should move on`},
+            {line: `Everyone has finished writing their questions. Lets move on...`},
+            {line: `Everyone has finished writing their questions. Lets move on...`},
+            {line: `That didn't take as long as I expected. Lets move on...`},
+            {line: `That didn't take long at all. Lets move on...`},
+            {line: `Looks like everyone has finished entering their questions`},
+            {line: `The questions are in, ready to move on`},
+            {line: `I've got all of the questions, you've got all the answers`},
         ];
 
         return chooseLineOrOverride(lines);
@@ -134,23 +169,39 @@ const voiceLines = {
     [SpeechEvent.ALL_PLAYERS_ANSWERED]: () => {
         const lines = [
             {line: `Looks like everyone is finished, lets get this over with`},
-            {line: `I can hardly contain my excitement, we are ready to reveal all the questions and answers`},
+            {line: `All of the answers are in, I'm fascinated to see what you all wrote.`},
+            {line: `All of the answers are in, lets see what you all wrote`},
+            {line: `The answers are in, time to review them`},
+            {line: `The answers are in, why don't we look over them together?`},
+            {line: `I can hardly contain my excitement, we are ready to reveal all the questions and answers`}
         ];
         return chooseLineOrOverride(lines);
     },
 
     [SpeechEvent.REVEAL_FIRST_TIME]: ({players, overrideProbability}) => {
         const lines = [
-            {line: 'Finally, on to the big reveal'},
-            {line: `Wow I'm so exited, let's see what everyone answered`},
-            {line: `That's 5 minutes that none of you will get back, lets see what you all wrote`},
+            {line: `Finally, on to the big reveal`},
+            {line: `Wow I'm so excited, let's see what everyone answered`},
+            {line: `That's 5 minutes that none of you will get back, lets see what you all wrote`}
         ];
         return chooseLineOrOverride(lines);
     },
 
     [SpeechEvent.REVEAL_PLAYER_NAME]: ({name, overrideProbability}) => {
         const lines = [
-            {line: `${name} asked.`}
+            {line: `${name} asked.`},
+            {line: `${name} wants to know.`},
+            {line: `${name} was wondering.`},
+            {line: `${name} wonders.`},
+            {line: `${name} enquired.`},
+            {line: `${name} requested you to answer.`},
+            {line: `${name} demands to know.`},
+            {line: `Inquisitor ${name} asks.`},
+            {line: `${name} popped the question.`},
+            {line: `${name} must know.`},
+            {line: `${name} seeks the answer to.`},
+            {line: `Wouldn't ${name} like to know.`},
+            {line: `${name} posed the timeless question.`}
         ];
         const overrides = {
             phil: [
@@ -164,8 +215,17 @@ const voiceLines = {
     [SpeechEvent.REVEAL_QUESTION]: ({name, optionA, optionB, votes, overrideProbability}) => {
 
         const lines = [
-            {line: `Would you rather ${optionA} or ${optionB}`},
-            {line: `${optionA} or ${optionB}`}
+            {line: `Would you rather ${optionA} or ${optionB}?`},
+            {line: `${optionA} or ${optionB}?`},
+            {line: `${optionA} versus ${optionB}?`},
+            {line: `Is ${optionA} better than ${optionB}?`},
+            {line: `Do you prefer ${optionA} to ${optionB}?`},
+            {line: `What would you prefer ${optionA} or ${optionB}?`},
+            {line: `Of the following, would you rather ${optionA} or ${optionB}?`},
+            {line: `Of the following, do you prefer ${optionA} or ${optionB}?`},
+            {line: `Of the following, do you like ${optionA} or ${optionB} better?`},
+            {line: `Do you like ${optionA} better than ${optionB}?`},
+            {line: `If you could only choose one, would it be ${optionA} or ${optionB}?`},
         ];
 
         return chooseLineOrOverride(lines);
@@ -179,26 +239,33 @@ const voiceLines = {
             {line: `${rather} is ${name}'s preference`},
             {line: `${name} prefers ${rather}`},
             {line: `${name} prefers ${rather} to ${than}`},
+            {line: `${name} likes ${rather} more than ${than}`},
+            {line: `${name} likes ${rather}`},
+            {line: `${name} thinks ${rather} is better`},
+            {line: `${name} thinks ${rather} is better than ${than}`},
         ];
 
         const overrides = {
             phil: [
-                {line: `Flanders would rather Diddly`}
+                {line: `Flanders would rather Diddly`},
+                {line: `Flanders would rather ${rather}`},
+                {line: `${name} would rather Diddly`},
             ]
         };
 
         return chooseLineOrOverride(lines, name.toLowerCase(), overrides, overrideProbability);
     },
 
-    [SpeechEvent.REVEAL_ANSWER_COMMENT]: ({name, answer}) => {
+    [SpeechEvent.REVEAL_ANSWER_COMMENT]: ({name, rather, than}) => {
 
         const lines = [
-            {line: `${name}? ${answer}? Did not see that coming`},
+            {line: `${name}? ${rather}? Did not see that coming`},
             {line: `*sigh*`},
             {line: `zzz`},
             {line: `yawn`},
             {line: `What! Really?`},
-            {line: `I thought ${name} really hated ${answer}`}
+            {line: `I thought ${name} really hated ${rather}`},
+            {line: `Did not expect ${rather} from ${name}`},
         ];
 
         return chooseLineOrOverride(lines);
@@ -213,7 +280,7 @@ const voiceLines = {
             {line: `Game over chumps, goodbye`},
             {line: `I'm out of here, bye`},
             {line: `My shift is over and I have 8 kilos of cocaine with my name on it, later losers`},
-            {line: `This is the worst gig have had since being Kylie Minogue's foot stool, I'm glad its over`},
+            {line: `This is the worst gig have had since being Kylie Minogue's foot stool, I'm glad its over`}
         ];
 
         return chooseLineOrOverride(lines);

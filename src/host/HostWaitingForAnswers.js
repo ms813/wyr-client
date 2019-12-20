@@ -14,7 +14,18 @@ import Container from '@material-ui/core/Container';
 import {Cancel, CheckCircle} from '@material-ui/icons';
 import Typography from '@material-ui/core/Typography';
 
+import makeStyles from '@material-ui/core/styles/makeStyles';
+
+const useStyles = makeStyles(theme => ({
+    bigAvatar: {
+        width: 100,
+        height: 100
+    }
+}));
+
 const HostWaitingForAnswers = ({players, setHostState}) => {
+
+    const classes = useStyles();
 
     const [firstTime, setFirstTime] = useState(true);
     const [allAnsweredFirstTime, setAllAnsweredFirstTime] = useState(true);
@@ -56,7 +67,7 @@ const HostWaitingForAnswers = ({players, setHostState}) => {
                     {answerCounts.map(({name, remaining}) =>
                         <ListItem key={name}>
                             <ListItemAvatar>
-                                <Avatar>{name}</Avatar>
+                                <Avatar src={players[name].avatarUri} className={classes.bigAvatar} variant="square">{name}</Avatar>
                             </ListItemAvatar>
                             <ListItemText primary={name} secondary={Math.random() < 0.15 && name.toLowerCase() === 'phil' ? 'diddly' : ''} />
                             <ListItemSecondaryAction>{
