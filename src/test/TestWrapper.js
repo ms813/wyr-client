@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import HostReveal from '../host/HostReveal';
 import Paint from '../components/Paint';
+import HostLobby from '../host/HostLobby';
 
 const TestWrapper = ({gameId = 'angry-goat-2'}) => {
-
+    const [ready, setReady] = useState(false);
 
     const players = {
         Phil: {
@@ -36,11 +37,18 @@ const TestWrapper = ({gameId = 'angry-goat-2'}) => {
         players[askerName].votes[voterName] = aOrB;
     };
 
-    return <Paint saveImage={console.log} canvasHeight={250} canvasWidth={250} />;
+    // return <Paint saveImage={console.log} canvasHeight={250} canvasWidth={250} />;
     // return <Paint />;
 
     // return <HostWaitingForQuestions players={players} />;
-    // return <HostLobby players={players} gameId={gameId} onClick={()=>console.log("host lobby click")} />;
+    setTimeout(()=> setReady(true), 500);
+
+    if(ready){
+        return <HostLobby players={players} gameId={gameId} onClick={()=>console.log("host lobby click")} />;
+    } else {
+        return "Loading..."
+    }
+
     // return <PlayerLobby players={players} gameId={gameId} onClick={()=>console.log("host lobby click")} />;
     // return <PlayerWriteQuestions updatePlayerState={console.log} setA={console.log} setB={console.log} playerName={playerName}/>;
     // return <PlayerGameOver />;
