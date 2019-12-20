@@ -7,6 +7,8 @@ import PlayerWaitingForOthers from './PlayerWaitingForOthers';
 import PlayerGameOver from './PlayerGameOver';
 import PlayerLobby from './PlayerLobby';
 import Paint from '../components/Paint';
+import {Typography} from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 
 const Player = ({gameId, playerName}) => {
     const [players, setPlayers] = useState({});
@@ -63,7 +65,12 @@ const Player = ({gameId, playerName}) => {
 
         switch (playerState) {
             case PlayerState.CREATE_AVATAR:
-                return <Paint saveImage={updatePlayerImageUri} canvasHeight={250} canvasWidth={250} />;
+                return (
+                    <Box textAlign="center">
+                        <Typography variant="h6">Draw an avatar!</Typography>
+                        <Paint saveImage={updatePlayerImageUri} canvasHeight={250} canvasWidth={250} />
+                    </Box>
+                );
             case PlayerState.LOBBY:
                 return lobby;
             case PlayerState.WRITING_QUESTION:

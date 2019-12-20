@@ -108,7 +108,7 @@ function App() {
         }
         return (
             <Box display="flex" flexDirection="column">
-                <Typography variant="h6" className={classes.title}> Would you rather?</Typography>
+                <Typography variant="h6" className={classes.title}>Would you rather?</Typography>
                 {clientTypeFragment}
             </Box>
         );
@@ -121,7 +121,7 @@ function App() {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        <img src="favicon.ico" alt="Logo" className={classes.icon} />
+                        <a href="/"><img src="favicon.ico" alt="Logo" className={classes.icon} /></a>
                         {appBar(gameId, clientType)}
                     </Toolbar>
                 </AppBar>
