@@ -88,11 +88,11 @@ const voiceLines = {
             { line: `Welcome, ${playerName}` },
             { line: `Greetings ${playerName}` },
             { line: `Hello, ${playerName}` },
-            { line: `${playerName}, you legend`},
+            { line: `${playerName}, you legend` },
             { line: `${playerName}? What kind of name is that?` },
             { line: `${playerName}? What a fat ned.` },
             { line: `Of all the gin joints in all the towns in all the world, ${playerName} walks in to mine.` },
-            {line: `Off to a great start ${playerName}, you found the right room.`}
+            { line: `Off to a great start ${playerName}, you found the right room.` }
 
         ];
         const overrides = {
@@ -112,8 +112,8 @@ const voiceLines = {
                 { line: `Claire has joined, wub wub pipette that mouse angus` }
             ],
             gayle: [
-                {line: `Looks like Gayle has dragged herself away from the gin long enough to play Would You Rather`},
-                
+                { line: `Looks like Gayle has dragged herself away from the gin long enough to play Would You Rather` },
+
 
             ]
         };
@@ -220,12 +220,13 @@ const voiceLines = {
         const playerNames = Object.keys(players)
         const lines = [
             { line: `Finally, on to the big reveal` },
-            { line: `I am so hot for ${playerNames[randomBetween(0, playerNames.length - 1)]}'s answers right now. Let's see what they were`},
-            { line: `Yippee- kay- yay mothertruckers it is time for the big reveal`},
+            { line: `I am so hot for ${playerNames[randomBetween(0, playerNames.length - 1)]}'s answers right now. Let's see what they were` },
+            { line: `Yippee- kay- yay mothertruckers it is time for the big reveal` },
             { line: `Wow I'm so excited, let's see what everyone answered` },
             { line: `That's 5 minutes that none of you will get back, lets see what you all wrote` },
-            {line: `Hold your horses ${playerNames[randomBetween(0, playerNames.length - 1)]} it is time for the answers to be revealed. Yee haw.`,
-            voice: Math.random() > 0.5 ? `Microsoft Zira Desktop - English (United States)` : `Microsoft David Desktop - English (United States)`
+            {
+                line: `Hold your horses ${playerNames[randomBetween(0, playerNames.length - 1)]} it is time for the answers to be revealed. Yee haw.`,
+                voice: Math.random() > 0.5 ? `Microsoft Zira Desktop - English (United States)` : `Microsoft David Desktop - English (United States)`
             }
         ];
         return chooseLineOrOverride(lines);
@@ -254,7 +255,7 @@ const voiceLines = {
             ],
 
             gayle: [
-                {line: `Gayle was sober enough to type`},
+                { line: `Gayle was sober enough to type` },
             ]
         };
         return chooseLineOrOverride(lines, name.toLowerCase(), overrides, overrideProbability);
@@ -311,19 +312,19 @@ const voiceLines = {
             { line: `*sigh*` },
             { line: `zzz` },
             { line: `yawn` },
-            { line: `Shocker`},
-            { line: `Fat ned`},
-            { line: `Pervert`},
-            { line: `Not very classy is it?`},
-            { line: `Obviously had too much to drink`},
-            { line: `Best have another drink then`},
+            { line: `Shocker` },
+            { line: `Fat ned` },
+            { line: `Pervert` },
+            { line: `Not very classy is it?` },
+            { line: `Obviously had too much to drink` },
+            { line: `Best have another drink then` },
             { line: `What! Really?` },
             { line: `I thought ${name} really hated ${rather}` },
             { line: `Did not expect ${rather} from ${name}` },
-            { line: ` ${rather}? Oh ${name} you're so naughty.`},
-            { line: `How enlightening`},
-            { line: `I wonder why not ${than}`},
-            { line: `I feel like I know you so much better now ${name}`},
+            { line: ` ${rather}? Oh ${name} you're so naughty.` },
+            { line: `How enlightening` },
+            { line: `I wonder why not ${than}` },
+            { line: `I feel like I know you so much better now ${name}` },
 
         ];
 
