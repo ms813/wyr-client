@@ -31,7 +31,7 @@ const CreateOrJoinForm = ({setGameId, setPlayerName, joinGame, createGame, gameI
             <Box py={2}>
                 <Typography className={classes.center}>A group game for asking your granny stupid questions</Typography>
             </Box>
-            <Box className={classes.center} display="flex" flexDirection="column" alignContent="center" flexWrap="wrap">
+            <Box className={classes.center} display="flex" flexDirection="column" alignContent="center" flexWrap="wrap" alignItems="center">
                 <Box className={classes.inputField}>
                     <TextField id="game-name-input" label="Room Name" variant="outlined"
                                onChange={(e) => setGameId(e.target.value.toLowerCase())}

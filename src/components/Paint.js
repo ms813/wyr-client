@@ -25,6 +25,16 @@ const Paint = ({saveImage, canvasWidth = 200, canvasHeight = 200}) => {
         } else {
             setCanvas(document.getElementsByTagName('canvas')[0]);
         }
+
+        document.body.style.position = 'fixed';
+        document.body.style.overflow = 'hidden';
+        document.body.style.width = '100%';
+
+        return () => {
+            document.body.style.position = 'static';
+            document.body.style.overflow = 'visible';
+            document.body.style.width = '';
+        }
     }, [canvas]);
 
     const mouseDown = (e) => {
