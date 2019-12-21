@@ -25,7 +25,7 @@ const HostReveal = ({players, setHostState}) => {
 
     const classes = useStyles();
 
-    const commentProbability = 0.15;
+    const commentProbability = 0.25;
     const speech = useContext(SpeechContext);
     const [sayIntro, setSayIntro] = useState(true);
     const [index, setIndex] = useState(0);
@@ -44,7 +44,7 @@ const HostReveal = ({players, setHostState}) => {
         };
 
         if (index === 0 && sayIntro) {
-            speech.speak(SpeechEvent.REVEAL_FIRST_TIME, {args: players});
+            speech.speak(SpeechEvent.REVEAL_FIRST_TIME, {args: {players}});
             setSayIntro(false);
         }
 

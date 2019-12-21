@@ -59,13 +59,13 @@ const TestWrapper = ({ gameId = 'angry-goat-2' }) => {
 
     if (ready) {
 
-        return <HostWaitingForQuestions players={players} />;
+        // return <HostWaitingForQuestions players={players} />;
         //  return <HostLobby players={players} gameId={gameId} onClick={()=>console.log("host lobby click")} />;
         // return <PlayerLobby players={players} gameId={gameId} onClick={()=>console.log("host lobby click")} />;
         //  return <PlayerWriteQuestions updatePlayerState={console.log} setA={console.log} setB={console.log} playerName={playerName}/>;
         // return <PlayerGameOver />;
         // return <HostGameOver />;
-        // return <HostReveal players={players} />;
+         return <HostReveal players={players} />;
 
         // return <CreateOrJoinForm
         //     setGameId={gameId => console.log('set game Id', gameId)}
