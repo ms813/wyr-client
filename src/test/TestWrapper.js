@@ -65,7 +65,7 @@ const TestWrapper = ({ gameId = 'angry-goat-2' }) => {
         //  return <PlayerWriteQuestions updatePlayerState={console.log} setA={console.log} setB={console.log} playerName={playerName}/>;
         // return <PlayerGameOver />;
         // return <HostGameOver />;
-         return <HostReveal players={players} />;
+        return <HostReveal players={players} />;
 
         // return <CreateOrJoinForm
         //     setGameId={gameId => console.log('set game Id', gameId)}

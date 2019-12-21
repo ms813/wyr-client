@@ -25,7 +25,7 @@ const HostReveal = ({players, setHostState}) => {
 
     const classes = useStyles();
 
-    const commentProbability = 0.25;
+    const commentProbability = 0.2;
     const speech = useContext(SpeechContext);
     const [sayIntro, setSayIntro] = useState(true);
     const [index, setIndex] = useState(0);
