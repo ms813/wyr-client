@@ -63,8 +63,18 @@ const Player = ({gameId, playerName}) => {
 
         const lobby = <PlayerLobby gameId={gameId} players={players} onLeave={leaveLobby} />;
 
+        if (!playerState.CREATE_AVATAR) {
+            document.body.style.position = 'static';
+            document.body.style.overflow = 'visible';
+        }
+
         switch (playerState) {
             case PlayerState.CREATE_AVATAR:
+                //hack to stop bouncing screen on mobile
+                document.body.style.position = 'fixed';
+                document.body.style.overflow = 'hidden';
+                document.body.style.width = '100%';
+
                 return (
                     <Box textAlign="center">
                         <Typography variant="h6">Draw an avatar!</Typography>

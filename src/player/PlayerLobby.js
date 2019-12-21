@@ -39,6 +39,9 @@ const PlayerLobby = ({gameId, players, onLeave, errorText}) => {
                             : `Waiting on at least ${MIN_PLAYERS - playerCount} more player${MIN_PLAYERS - playerCount > 1 ? 's' : ''}`
                         }</Typography>
                     </Box>
+                    <Box textAlign="center">
+                        <Button variant="contained" color="secondary" onClick={onLeave}>Leave Lobby</Button>
+                    </Box>
                 </Box>
                 <Container maxWidth="sm">{
                     players ? (
@@ -59,9 +62,6 @@ const PlayerLobby = ({gameId, players, onLeave, errorText}) => {
                         )
                         : 'Waiting on players to join'
                 }</Container>
-                <Box textAlign="center">
-                    <Button variant="contained" color="secondary" onClick={onLeave}>Leave Lobby</Button>
-                </Box>
             </div>
             {errorText && <div>{errorText}</div>}
         </div>
