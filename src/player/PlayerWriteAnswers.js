@@ -57,7 +57,7 @@ const PlayerWriteAnswers = ({players, voterName, tallyVote, setVoterState}) => {
                                                   onChange={() => updateVotes('B', p.name, voterName)}>{p.optionB}</ToggleButton>
                                 </Box>
                             </Box>
-                            {i < Object.values(players).length - 2 && <Divider />}
+                            {i < Object.values(players).length - 1 && <Divider variant="middle"/>}
                         </Fragment>
                     );
                 })

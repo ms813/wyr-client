@@ -9,7 +9,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import {CheckCircle} from '@material-ui/icons';
+import {Cancel, CheckCircle} from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -53,9 +53,11 @@ const PlayerLobby = ({gameId, players, onLeave, errorText}) => {
                                         </ListItemAvatar>
                                         <ListItemText primary={name}
                                                       secondary={Math.random() < 0.15 && name.toLowerCase() === 'phil' ? 'howdy-do neighbour' : ''} />
-                                        <ListItemSecondaryAction>
-                                            <CheckCircle fontSize="large" htmlColor="green" />
-                                        </ListItemSecondaryAction>
+                                        <ListItemSecondaryAction>{
+                                            avatarUri
+                                                ? <CheckCircle fontSize="large" htmlColor="green" />
+                                                : <Cancel fontSize="large" htmlColor="red" />
+                                        }</ListItemSecondaryAction>
                                     </ListItem>
                                 )
                             }</List>
