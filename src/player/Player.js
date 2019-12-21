@@ -67,7 +67,7 @@ const Player = ({gameId, playerName}) => {
             case PlayerState.CREATE_AVATAR:
                 return (
                     <Box textAlign="center">
-                        <Typography variant="h6">Draw an avatar!</Typography>
+                        <Typography variant="h6">{playerName}, draw an avatar!</Typography>
                         <Paint saveImage={updatePlayerImageUri} canvasHeight={250} canvasWidth={250} />
                     </Box>
                 );

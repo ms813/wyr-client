@@ -52,6 +52,7 @@ const SpeechEvent = {
 const voiceLines = {
     [SpeechEvent.LOBBY_CREATED]: ({ gameId, overrideProbability }) => {
         const lines = [
+            { line: `Welcome to ${gameId}` },
             { line: `${gameId} is open for business` },
             { line: `Type in ${gameId} in the room name field to play` },
             { line: `Enter in ${gameId} in the room name box` },
@@ -113,8 +114,6 @@ const voiceLines = {
             ],
             gayle: [
                 { line: `Looks like Gayle has dragged herself away from the gin long enough to play Would You Rather` },
-
-
             ]
         };
 
